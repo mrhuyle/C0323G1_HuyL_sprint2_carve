@@ -31,7 +31,7 @@ const Navbar = () => {
   });
 
   const navItems = [
-    { link: "Trang chủ", path: "home" },
+    { link: "Trang chủ", path: "/" },
     { link: "Về chúng tôi", path: "about" },
     { link: "Câu chuyện", path: "story" },
     { link: "Đồng hành", path: "product" },
@@ -48,8 +48,8 @@ const Navbar = () => {
           }`}
         >
           <div className="flex items-center justify-between gap-8 text-base">
-            <a
-              href=""
+            <Link
+              to="/"
               className="flex items-center space-x-3 text-2xl font-semibold"
             >
               <img
@@ -60,7 +60,7 @@ const Navbar = () => {
               <span id="brand" className="text-[#330099] text-3xl">
                 Carve
               </span>
-            </a>
+            </Link>
 
             {/* nav-items for large devices*/}
             <ul className="hidden space-x-12 md:flex">
@@ -80,26 +80,29 @@ const Navbar = () => {
 
             {/* btn for large devices */}
             <div className="items-center hidden space-x-8 lg:flex">
-              <div className="relative">
+              {/* cart */}
+              <div className="relative cursor-pointer">
                 <div className="absolute t-0 left-3">
                   <p className="flex items-center justify-center w-2 h-2 p-3 text-xs text-white bg-red-500 rounded-full">
                     3
                   </p>
                 </div>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="w-6 h-6 mt-4 file:"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
-                  />
-                </svg>
+                <Link to="/cart">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="w-6 h-6 mt-4 file:"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+                    />
+                  </svg>
+                </Link>
               </div>
 
               <Link

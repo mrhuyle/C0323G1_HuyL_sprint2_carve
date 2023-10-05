@@ -20,7 +20,7 @@ const WelcomeBanner = () => {
           {/* Slide 1 */}
           <div className="flex items-center justify-center h-full py-12 my-28 md:my-8">
             <img src={cards1} alt="" className="object-scale-down" />
-            <div className="absolute top-0 w-full text-4xl font-bold text-center animate-bounce text-brandPrimary">
+            <div className="absolute top-0 w-full text-4xl font-bold text-center animate-pulse text-brandPrimary">
               Ở đây chúng tôi có bán bộ thẻ ghi nhớ mọi thứ trên đời!
             </div>
             <div className="absolute top-10">
@@ -58,7 +58,7 @@ const WelcomeBanner = () => {
               Bạn có tự tạo bộ thẻ và bắt đầu học ngay trên Carve?
             </div>
             <Link to="/register">
-              <span className="absolute text-3xl font-bold text-center text-red-900 cursor-pointer animate-pulse right-5 top-20">
+              <span className="absolute text-2xl font-bold text-center text-red-900 underline cursor-pointer animate-pulse right-5 top-20">
                 Đăng ký liền tay bắt ngay ưu đãi!
               </span>
             </Link>

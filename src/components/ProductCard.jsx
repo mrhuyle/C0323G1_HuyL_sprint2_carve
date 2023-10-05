@@ -1,6 +1,7 @@
 import React from "react";
 import { Card } from "flowbite-react";
 import java from "../assets/img/java_cards.jpeg";
+import { Link } from "react-router-dom";
 
 const ProductCard = () => {
   return (
@@ -9,14 +10,14 @@ const ProductCard = () => {
         imgAlt="Apple Watch Series 7 in colors pink, silver, and black"
         imgSrc={java}
       >
-        <a href="#">
+        <Link to="/product_detail">
           <h5 className="text-xl font-semibold tracking-tight text-gray-900">
             <span className="rounded bg-cyan-100 p-2 py-0.5 text-base font-semibold text-cyan-800 dark:bg-cyan-200">
               Bộ thẻ
             </span>
             <p>Ôn tập kiến thức JavaCore</p>
           </h5>
-        </a>
+        </Link>
         <div className="mb-5 mt-2.5 flex items-center"></div>
         <div className="flex items-center justify-between">
           <span className="text-3xl font-bold text-gray-900 dark:text-white">
