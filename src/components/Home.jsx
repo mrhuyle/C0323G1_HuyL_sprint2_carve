@@ -1,10 +1,15 @@
 import React from "react";
+import Navbar from "./Navbar";
+import WelcomeBanner from "./WelcomeBanner";
+import MyFooter from "./MyFooter";
 
 const Home = () => {
   return (
-    <div className="bg-gray-100">
-      <div className="h-screen min-h-screen px-4 mx-auto lg:px-14 max-w-screen-2xl"></div>
-    </div>
+    <>
+      <Navbar />
+      <WelcomeBanner />
+      <MyFooter />
+    </>
   );
 };
 

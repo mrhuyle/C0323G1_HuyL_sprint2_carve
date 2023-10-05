@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import logo from "../assets/carve_logo_indigo.png";
-import { Link } from "react-scroll";
+import * as Scroll from "react-scroll";
 import { FaXmark, FaBars } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
+  const LinkScroll = Scroll.Link;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
 
@@ -37,7 +39,7 @@ const Navbar = () => {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 bg-white md:bg-transparent w-100">
+      <header className="fixed top-0 left-0 right-0 bg-gray-100 w-100">
         <nav
           className={`py-4 lg:px-14 px-4 ${
             isSticky
@@ -55,13 +57,15 @@ const Navbar = () => {
                 alt=""
                 className="items-center inline-block w-10"
               />
-              <span className="text-[#330099]">Carve</span>
+              <span id="brand" className="text-[#330099] text-3xl">
+                Carve
+              </span>
             </a>
 
             {/* nav-items for large devices*/}
             <ul className="hidden space-x-12 md:flex">
               {navItems.map((item, index) => (
-                <Link
+                <LinkScroll
                   key={index}
                   to={item.path}
                   spy={true}
@@ -70,7 +74,7 @@ const Navbar = () => {
                   className="block px-4 py-2 text-base rounded text-brandPrimary hover:bg-brandPrimary hover:text-gray-100 first:font-medium hover:cursor-pointer"
                 >
                   {item.link}
-                </Link>
+                </LinkScroll>
               ))}
             </ul>
 
@@ -82,9 +86,11 @@ const Navbar = () => {
               >
                 Đăng nhập
               </a>
-              <button className="px-4 py-2 text-white transition-all duration-100 duration-300 rounded bg-brandPrimary hover:bg-purpleTone">
-                Đăng ký
-              </button>
+              <Link to="/login">
+                <button className="px-4 py-2 text-white transition-all duration-100 duration-300 rounded bg-brandPrimary hover:bg-purpleTone">
+                  Đăng ký
+                </button>
+              </Link>
             </div>
 
             {/* menu items for mobiles */}
@@ -109,7 +115,7 @@ const Navbar = () => {
             }`}
           >
             {navItems.map((item, index) => (
-              <Link
+              <LinkScroll
                 key={index}
                 to={item.path}
                 spy={true}
@@ -118,7 +124,7 @@ const Navbar = () => {
                 className="block text-base text-gray-100 hover:text-brandPrimary first:font-medium hover:cursor-pointer"
               >
                 {item.link}
-              </Link>
+              </LinkScroll>
             ))}
           </div>
         </nav>
