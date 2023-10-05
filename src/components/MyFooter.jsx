@@ -1,18 +1,18 @@
 import React from "react";
 import { Footer } from "flowbite-react";
 import { BsFacebook, BsGithub, BsInstagram, BsTwitter } from "react-icons/bs";
-import logo from "../assets/carve_logo_svg.svg";
+import logo from "../assets/img/carve_logo_svg.svg";
 
 const MyFooter = () => {
   return (
     <Footer container>
       <div className="w-full h-30">
         <div className="relative grid justify-between w-full sm:flex sm:justify-between md:flex md:grid-cols-1">
-          <div className="relative flex items-center justify-start w-1/2 overflow-hidden bg-indigo-200 rounded">
+          <div className="relative flex items-center justify-start w-1/2 overflow-hidden bg-indigo-100 rounded">
             <div className="absolute flex items-center justify-start top-5 left-5">
               <Footer.Brand alt="Carve Logo" href="#" src={logo} />
               <span id="brand" className="text-[#330099] text-3xl">
-                Carve
+                Carve - Khắc Kiến Thức
               </span>
             </div>
             <div
@@ -32,7 +32,7 @@ const MyFooter = () => {
               </span>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-8 mb-2 sm:mt-4 sm:grid-cols-3 sm:gap-6">
+          <div className="grid w-1/2 grid-cols-2 gap-8 mb-2 sm:mt-4 sm:grid-cols-3 sm:gap-6 ms-5">
             <div>
               <Footer.Title title="Về chúng tôi" />
               <Footer.LinkGroup col>

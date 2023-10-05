@@ -12,6 +12,10 @@ body {
   font-family: "Dancing Script", cursive;
 }
 
+#user_review {
+  -webkit-text-stroke: 0.2px white;
+}
+
 header {
   z-index: 10001 !important;
 }
