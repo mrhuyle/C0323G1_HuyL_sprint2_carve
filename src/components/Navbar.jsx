@@ -71,7 +71,7 @@ const Navbar = () => {
                   spy={true}
                   smooth={true}
                   offset={-100}
-                  className="block px-4 py-2 text-base rounded text-brandPrimary hover:bg-brandPrimary hover:text-gray-100 first:font-medium hover:cursor-pointer"
+                  className="block px-4 py-2 text-lg rounded text-brandPrimary hover:bg-brandPrimary hover:text-gray-100 first:font-medium hover:cursor-pointer"
                 >
                   {item.link}
                 </LinkScroll>
@@ -83,7 +83,7 @@ const Navbar = () => {
               {/* cart */}
               <div className="relative cursor-pointer">
                 <div className="absolute t-0 left-3">
-                  <p className="flex items-center justify-center w-2 h-2 p-3 text-xs text-white bg-red-500 rounded-full">
+                  <p className="flex items-center justify-center w-1 h-1 p-2 text-xs text-white bg-red-500 rounded-full">
                     3
                   </p>
                 </div>
@@ -94,7 +94,7 @@ const Navbar = () => {
                     viewBox="0 0 24 24"
                     strokeWidth="1.5"
                     stroke="currentColor"
-                    className="w-6 h-6 mt-4 file:"
+                    className="mt-3 w-7 h-7 text-brandPrimary"
                   >
                     <path
                       strokeLinecap="round"

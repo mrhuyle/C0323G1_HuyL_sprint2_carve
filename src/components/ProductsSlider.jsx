@@ -10,9 +10,11 @@ import ProductCard from "./ProductCard";
 
 const ProductsSlider = () => {
   return (
-    <div className="relative px-4 mx-auto bg-gray-100 lg:px-14 max-w-screen-2xl">
-      <div className="text-2xl font-extrabold text-center capitalize text-brandPrimary">
-        Bộ thẻ mở cửa tri thức
+    <div className="relative px-4 py-8 mx-auto bg-gray-100 md:px-14 max-w-screen-2xl">
+      <div className="py-2 mx-auto mt-10 mb-5 italic font-extrabold text-center bg-pink-100 md:w-1/2">
+        <h2 className="mb-3 text-4xl font-semibold text-brandPrimary head-title">
+          BỘ THẺ TRI THỨC
+        </h2>
       </div>
       <div>
         <div>
