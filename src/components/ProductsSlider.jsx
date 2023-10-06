@@ -11,7 +11,7 @@ import ProductCard from "./ProductCard";
 const ProductsSlider = () => {
   return (
     <div className="relative px-4 py-8 mx-auto bg-gray-100 md:px-14 max-w-screen-2xl">
-      <div className="py-2 mx-auto mt-10 mb-5 italic font-extrabold text-center bg-pink-100 md:w-1/2">
+      <div className="py-2 mx-auto mt-10 mb-5 italic font-extrabold leading-relaxed text-center bg-indigo-100 rounded-2xl md:w-1/2">
         <h2 className="mb-3 text-4xl font-semibold text-brandPrimary head-title">
           BỘ THẺ TRI THỨC
         </h2>
@@ -72,7 +72,6 @@ const ProductsSlider = () => {
       <div>
         <Swiper
           modules={[Navigation]}
-          // navigation={true}
           navigation={{
             nextEl: ".btn-nxt-1",
             prevEl: ".btn-prev-1",

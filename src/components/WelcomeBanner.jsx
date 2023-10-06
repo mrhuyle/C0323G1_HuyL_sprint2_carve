@@ -23,7 +23,7 @@ const WelcomeBanner = () => {
             <div className="absolute top-0 w-full text-4xl font-bold text-center animate-pulse text-brandPrimary">
               Ở đây chúng tôi có bán bộ thẻ ghi nhớ mọi thứ trên đời!
             </div>
-            <div className="absolute top-10">
+            <div className="absolute top-11">
               <button
                 type="button"
                 className="text-lg focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg px-5 py-2.5 mr-2 mb-2"
@@ -58,7 +58,7 @@ const WelcomeBanner = () => {
               Bạn có tự tạo bộ thẻ và bắt đầu học ngay trên Carve?
             </div>
             <Link to="/register">
-              <span className="absolute text-2xl font-bold text-center text-red-900 underline cursor-pointer animate-pulse right-5 top-20">
+              <span className="absolute text-2xl font-bold text-center text-red-700 underline cursor-pointer animate-pulse right-5 top-20">
                 Đăng ký liền tay bắt ngay ưu đãi!
               </span>
             </Link>
@@ -68,8 +68,8 @@ const WelcomeBanner = () => {
           <div className="flex items-center justify-center h-full py-12 my-28 md:my-8">
             <div className="relative">
               <img src={thinking} alt="" className="object-scale-down" />
-              <div className="absolute inline-block top-1/2 right-20">
-                Read something
+              <div className="absolute inline-block top-1/2 right-20 paragraph1">
+                <span className="">Carve - Khắc Kiến Thức</span>
               </div>
             </div>
           </div>

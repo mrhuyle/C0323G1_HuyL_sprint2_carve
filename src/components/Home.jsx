@@ -4,7 +4,8 @@ import WelcomeBanner from "./WelcomeBanner";
 import MyFooter from "./MyFooter";
 import AboutLeitner from "./AboutLeitner";
 import ProductsSlider from "./ProductsSlider";
-import Services from "./Services";
+import Roadmap from "./Roadmap";
+import Blogs from "./Blogs";
 
 const Home = () => {
   return (
@@ -12,8 +13,10 @@ const Home = () => {
       <Navbar />
       <WelcomeBanner />
       <ProductsSlider />
-      <Services />
+      <ProductsSlider />
+      <Roadmap />
       <AboutLeitner />
+      <Blogs />
       <MyFooter />
     </>
   );

@@ -12,7 +12,7 @@ const ProductCard = () => {
       >
         <Link to="/product_detail">
           <h5 className="text-xl font-semibold tracking-tight text-gray-900">
-            <span className="rounded bg-cyan-100 p-2 py-0.5 text-base font-semibold text-cyan-800 dark:bg-cyan-200">
+            <span className="rounded bg-indigo-300 p-2 py-0.5 text-base font-semibold text-cyan-800 dark:bg-cyan-200">
               Bộ thẻ
             </span>
             <p>Ôn tập kiến thức JavaCore</p>
