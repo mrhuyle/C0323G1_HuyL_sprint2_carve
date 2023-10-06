@@ -46,7 +46,7 @@ const WelcomeBanner = () => {
             <div className="relative">
               <img src={brain} alt="" className="object-scale-down" />
               <div className="absolute inline-block top-1/2 right-20">
-                Read something
+                Free Spaced Repetition Scheduling Algorithm
               </div>
             </div>
           </div>

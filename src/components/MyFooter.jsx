@@ -16,7 +16,7 @@ const MyFooter = () => {
               </span>
             </div>
             <div
-              className="absolute flex flex-col bottom-1 ps-5 text-brandPrimary"
+              className="absolute flex flex-col pb-5 bottom-1 ps-5 text-brandPrimary"
               id="quote"
             >
               <span className="text-lg font-semibold">
