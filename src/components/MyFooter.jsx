@@ -2,34 +2,33 @@ import React from "react";
 import { Footer } from "flowbite-react";
 import { BsFacebook, BsGithub, BsInstagram, BsTwitter } from "react-icons/bs";
 import logo from "../assets/img/carve_logo_svg.svg";
+import { AiOutlineHome, AiOutlineMail, AiOutlinePhone } from "react-icons/ai";
 
 const MyFooter = () => {
   return (
     <Footer container>
       <div className="w-full h-30">
         <div className="relative grid justify-between w-full sm:flex sm:justify-between md:flex md:grid-cols-1">
-          <div className="relative flex items-center justify-start w-1/2 overflow-hidden bg-indigo-100 rounded">
+          <div className="relative flex items-center justify-start w-1/2 overflow-hidden rounded">
             <div className="absolute flex items-center justify-start top-5 left-5">
               <Footer.Brand alt="Carve Logo" href="#" src={logo} />
               <span id="brand" className="text-[#330099] text-3xl">
                 Carve - Khắc Kiến Thức
               </span>
             </div>
-            <div
-              className="absolute flex flex-col pb-5 bottom-1 ps-5 text-brandPrimary"
-              id="quote"
-            >
-              <span className="text-lg font-semibold">
-                &quot; Không phải là tôi quá thông minh, chỉ là tôi chịu bỏ
-                nhiều thời gian hơn với rắc rối.
-              </span>
-              <span className="text-lg font-semibold">
-                &nbsp; It&apos;s not that I&apos;m so smart, it&apos;s just that
-                I stay with problems longer. &quot;
-              </span>
-              <span className="text-xl font-bold">
-                Albert Einstein - Vĩ nhân vĩ đại nhất Thế kỷ XX
-              </span>
+            <div className="absolute flex flex-col items-start ps-5 bottom-2">
+              <div className="flex items-center justify-end gap-2 text-xl font-medium text-brandPrimary">
+                <AiOutlineHome />
+                <span>209 Văn Tiến Dũng - Đà Nẵng - Việt Nam</span>
+              </div>
+              <div className="flex items-center justify-end gap-2 text-xl font-medium text-brandPrimary">
+                <AiOutlineMail />
+                <span>mrhuyle@gmail.com</span>
+              </div>
+              <div className="flex items-center justify-end gap-2 text-xl font-medium text-brandPrimary">
+                <AiOutlinePhone />
+                <span>(084) 905 169 777</span>
+              </div>
             </div>
           </div>
           <div className="grid w-1/2 grid-cols-2 gap-8 mb-2 sm:mt-4 sm:grid-cols-3 sm:gap-6 ms-5">
