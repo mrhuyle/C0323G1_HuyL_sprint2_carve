@@ -1,6 +1,7 @@
 import React from "react";
 import MyFooter from "./MyFooter";
 import Navbar from "./Navbar";
+import java from "../assets/img/java_cards.jpeg";
 
 const Cart = () => {
   return (
@@ -8,9 +9,13 @@ const Cart = () => {
       <Navbar />
 
       {/* cart */}
-      <div className="h-screen py-20 bg-gray-100">
+      <div className="h-screen pt-20 pb-20 bg-gray-100">
         <div className="container px-4 mx-auto">
-          <h1 className="mb-4 text-2xl font-semibold">Giỏ hàng</h1>
+          <div className="pt-3 pb-2 mx-auto mt-6 mb-5 italic font-extrabold leading-relaxed text-center rounded-2xl md:w-1/2">
+            <h2 className="mb-3 text-4xl font-semibold text-brandPrimary head-title">
+              GIỎ HÀNG
+            </h2>
+          </div>
           <div className="flex flex-col gap-4 md:flex-row">
             <div className="md:w-3/4">
               <div className="p-6 mb-4 bg-white rounded-lg shadow-md">
@@ -29,7 +34,7 @@ const Cart = () => {
                         <div className="flex items-center">
                           <img
                             className="w-16 h-16 mr-4"
-                            src="https://via.placeholder.com/150"
+                            src={java}
                             alt="Product image"
                           />
                           <span className="font-semibold">

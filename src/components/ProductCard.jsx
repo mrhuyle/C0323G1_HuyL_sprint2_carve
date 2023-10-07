@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const ProductCard = () => {
   return (
-    <div>
+    <div className="hover:scale-95 hover:transition-transform">
       <Card
         imgAlt="Apple Watch Series 7 in colors pink, silver, and black"
         imgSrc={java}
