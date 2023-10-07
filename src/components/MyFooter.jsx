@@ -1,7 +1,7 @@
 import React from "react";
 import { Footer } from "flowbite-react";
 import { BsFacebook, BsGithub, BsInstagram, BsTwitter } from "react-icons/bs";
-import logo from "../assets/img/carve_logo_svg.svg";
+import logo from "../assets/img/carve_logo_indigo.png";
 import { AiOutlineHome, AiOutlineMail, AiOutlinePhone } from "react-icons/ai";
 
 const MyFooter = () => {
@@ -10,14 +10,14 @@ const MyFooter = () => {
       <div className="w-full h-30">
         <div className="relative grid justify-between w-full sm:flex sm:justify-between md:flex md:grid-cols-1">
           <div className="relative flex items-center justify-start w-1/2 overflow-hidden rounded">
-            <div className="absolute flex items-center justify-start top-5 left-5">
-              <Footer.Brand alt="Carve Logo" href="#" src={logo} />
-              <span id="brand" className="text-[#330099] text-3xl">
+            <div className="absolute flex items-center justify-start gap-2 top-5 left-5">
+              <img src={logo} alt="" className="w-12 h-12" />
+              <span id="brand" className="text-3xl text-bra text-brandPrimary">
                 Carve - Khắc Kiến Thức
               </span>
             </div>
             <div className="absolute flex flex-col items-start ps-5 bottom-2">
-              <div className="flex items-center justify-end gap-2 text-xl font-medium text-brandPrimary">
+              <div className="flex items-center justify-end gap-2 text-lg font-medium text-brandPrimary">
                 <AiOutlineHome />
                 <span>209 Văn Tiến Dũng - Đà Nẵng - Việt Nam</span>
               </div>
@@ -33,7 +33,7 @@ const MyFooter = () => {
           </div>
           <div className="grid w-1/2 grid-cols-2 gap-8 mb-2 sm:mt-4 sm:grid-cols-3 sm:gap-6 ms-5">
             <div>
-              <Footer.Title title="Về chúng tôi" />
+              <Footer.Title className="text-blue-800" title="Về chúng tôi" />
               <Footer.LinkGroup col>
                 <Footer.Link href="#">Carve - Khắc Kiến Thức</Footer.Link>
                 <Footer.Link href="#">Hệ thống SRS</Footer.Link>
@@ -42,7 +42,7 @@ const MyFooter = () => {
               </Footer.LinkGroup>
             </div>
             <div>
-              <Footer.Title title="Chính sách" />
+              <Footer.Title className="text-blue-800" title="Chính sách" />
               <Footer.LinkGroup col>
                 <Footer.Link href="#">Chính sách sản phẩm</Footer.Link>
                 <Footer.Link href="#">Quyền lợi khách hàng</Footer.Link>
@@ -50,7 +50,7 @@ const MyFooter = () => {
               </Footer.LinkGroup>
             </div>
             <div>
-              <Footer.Title title="Tìm hiểu thêm" />
+              <Footer.Title className="text-blue-800" title="Tìm hiểu thêm" />
               <Footer.LinkGroup col>
                 <Footer.Link href="#">Thuật toán nền tảng</Footer.Link>
                 <Footer.Link href="#">Vì cộng đồng</Footer.Link>

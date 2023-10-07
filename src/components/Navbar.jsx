@@ -57,7 +57,7 @@ const Navbar = () => {
                 alt=""
                 className="items-center inline-block w-10"
               />
-              <span id="brand" className="text-[#330099] text-3xl">
+              <span id="brand" className="text-3xl text-brandPrimary">
                 Carve
               </span>
             </Link>
@@ -112,7 +112,7 @@ const Navbar = () => {
                 Đăng nhập
               </Link>
               <Link to="/register">
-                <button className="px-4 py-2 text-white transition-all duration-100 duration-300 rounded bg-brandPrimary hover:bg-indigo-400 hover:text-gray-900">
+                <button className="px-4 py-2 text-white transition-all duration-100 duration-300 border-2 border-gray-300 rounded bg-brandPrimary hover:bg-indigo-400 hover:text-blue-800">
                   Đăng ký
                 </button>
               </Link>

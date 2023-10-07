@@ -33,7 +33,7 @@ const Blogs = () => {
   ];
   return (
     <div className="px-4 pt-8 pb-32 mx-auto bg-gray-100 md:px-14 max-w-screen-2xl">
-      <div className="py-2 mx-auto mt-10 mb-5 italic leading-relaxed text-center bg-indigo-100 rounded-2xl md:w-1/2 text-brandPrimary head-title">
+      <div className="pt-3 pb-2 mx-auto mt-10 mb-5 italic leading-relaxed text-center bg-indigo-100 rounded-2xl md:w-1/2 text-brandPrimary head-title">
         <h2 className="mb-3 text-4xl font-semibold font-extrabold text-brandPrimary head-title">
           CÂU CHUYỆN
         </h2>

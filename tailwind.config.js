@@ -9,9 +9,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        'neutralSilver': '#F5F7FA',
-        'brandPrimary': '#330099',
-        'neutralGrey': '#717171',
+        'brandPrimary': '#6499E9',
+        'buttonColor' : '#9EDDFF',
       },
     },
   },

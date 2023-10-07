@@ -4,7 +4,7 @@ import img2 from "../assets/img/Leitner-Alternative-5boxes.png";
 const AboutLeitner = () => {
   return (
     <div className="px-4 py-16 mx-auto bg-gray-100 md:px-14 max-w-screen-2xl">
-      <div className="py-2 mx-auto mt-10 mb-5 italic font-extrabold leading-relaxed text-center bg-indigo-100 rounded-2xl md:w-1/2">
+      <div className="pt-3 pb-2 mx-auto mt-10 mb-5 italic font-extrabold leading-relaxed text-center bg-indigo-100 rounded-2xl md:w-1/2">
         <h2 className="px-1 mb-3 text-4xl font-semibold text-brandPrimary head-title">
           VỀ HỘP LEITNER - LEITNER&apos;S BOXS
         </h2>
@@ -18,7 +18,7 @@ const AboutLeitner = () => {
             </p>
             <a
               href="#"
-              className="inline-block px-4 py-2 space-y-2 font-bold text-gray-900 bg-indigo-300 rounded hover:text-white hover:bg-blue-700"
+              className="inline-block px-4 py-2 space-y-2 font-bold text-blue-800 bg-indigo-300 rounded hover:text-white hover:bg-blue-700"
             >
               Tìm hiểu thêm
             </a>
