@@ -11,7 +11,7 @@ const Login = () => {
           className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
         >
           <img className="w-12 h-12 mr-2" src={logo} alt="logo" />
-          <span id="brand" className="text-[#330099] text-4xl">
+          <span id="brand" className="text-4xl text-brandPrimary">
             Carve
           </span>
         </Link>

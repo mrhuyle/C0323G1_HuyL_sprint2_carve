@@ -58,7 +58,7 @@ const WelcomeBanner = () => {
               Bạn có tự tạo bộ thẻ và bắt đầu học ngay trên Carve?
             </div>
             <Link to="/register">
-              <span className="absolute text-2xl font-bold text-center text-red-700 underline cursor-pointer animate-pulse right-5 top-20">
+              <span className="absolute text-2xl font-bold text-center text-red-700 underline cursor-pointer animate-pulse right-1/4 top-20">
                 Đăng ký liền tay bắt ngay ưu đãi!
               </span>
             </Link>

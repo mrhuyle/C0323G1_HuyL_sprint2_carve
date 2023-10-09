@@ -3,6 +3,7 @@ import logo from "../assets/img/carve_logo_indigo.png";
 import * as Scroll from "react-scroll";
 import { FaXmark, FaBars } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import Dropdown from "./Dropdown";
 
 const Navbar = () => {
   const LinkScroll = Scroll.Link;
@@ -105,6 +106,7 @@ const Navbar = () => {
                 </Link>
               </div>
 
+              <Dropdown />
               <Link
                 to="/login"
                 className="items-center hidden px-4 py-2 border-2 border-gray-300 rounded lg:flex text-brandPrimary hover:bg-brandPrimary hover:text-gray-100 hover:cursor-pointer"
@@ -112,7 +114,7 @@ const Navbar = () => {
                 Đăng nhập
               </Link>
               <Link to="/register">
-                <button className="px-4 py-2 text-white transition-all duration-100 duration-300 border-2 border-gray-300 rounded bg-brandPrimary hover:bg-indigo-400 hover:text-blue-800">
+                <button className="flex items-center px-4 py-2 text-white transition-all duration-300 border-2 border-gray-300 rounded bg-brandPrimary hover:bg-indigo-400 hover:text-blue-800">
                   Đăng ký
                 </button>
               </Link>
