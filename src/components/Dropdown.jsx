@@ -1,15 +1,39 @@
 import { Menu, Transition } from "@headlessui/react";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment } from "react";
 import { AiOutlineUser } from "react-icons/ai";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import AuthContext from "../context/AuthProvider";
+import Swal from "sweetalert2";
 
-const Dropdown = () => {
+const Dropdown = ({ username }) => {
+  const { setAuth } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const logOut = () => {
+    Swal.fire({
+      title: "Bạn có muốn đăng xuất?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Không",
+      confirmButtonText: "Đăng xuất",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setAuth({});
+        navigate("/");
+      }
+    });
+  };
+
   return (
     <div>
-      <Menu as="div" className="relative inline-block text-left">
+      <Menu as="div" className="relative inline-block w-40 text-left min-w-min">
         <div className="flex items-center justify-between">
-          <Menu.Button className="items-center hidden px-4 py-2 border-2 border-gray-300 rounded lg:flex text-brandPrimary hover:bg-brandPrimary hover:text-gray-100 hover:cursor-pointer">
+          <Menu.Button className="items-center hidden w-full px-4 py-2 border-2 border-gray-300 rounded lg:flex text-brandPrimary hover:bg-brandPrimary hover:text-gray-100 hover:cursor-pointer">
             <AiOutlineUser className="me-2" />
-            Username
+            {username}
           </Menu.Button>
         </div>
         <Transition
@@ -81,6 +105,7 @@ const Dropdown = () => {
                         ? "bg-brandPrimary text-white"
                         : "text-brandPrimary"
                     } group flex w-full items-center rounded-md px-2 py-2 text-base`}
+                    onClick={logOut}
                   >
                     {active ? (
                       <MoveActiveIcon

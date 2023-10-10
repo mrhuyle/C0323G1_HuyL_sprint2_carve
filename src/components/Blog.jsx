@@ -7,10 +7,10 @@ const Blog = ({ imgSrc, imgAlt, title, description }) => {
   return (
     <Card imgAlt={imgAlt} imgSrc={imgSrc}>
       <h5 className="text-2xl font-bold tracking-tight text-blue-800">
-        <p>{title}</p>
+        <span>{title}</span>
       </h5>
       <p className="font-normal text-gray-700 dark:text-gray-400">
-        <p>{description}</p>
+        <span>{description}</span>
       </p>
       <a
         href="#"

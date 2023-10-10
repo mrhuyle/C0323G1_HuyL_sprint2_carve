@@ -15,7 +15,7 @@ const Blogs = () => {
         "Học tập trọn đời là một việc cực kỳ quan trọng, phải gắn nó thường thức, tự nhiên và vui thích",
     },
     {
-      id: 1,
+      id: 2,
       imgSrc: blog2,
       imgAlt: "blog2",
       title: "Kiên trì trong học tập",
@@ -23,7 +23,7 @@ const Blogs = () => {
         "Không phải là tôi quá thông minh, chỉ là tôi chịu bỏ nhiều thời gian hơn với rắc rối. - Albert Einstein",
     },
     {
-      id: 1,
+      id: 3,
       imgSrc: blog3,
       imgAlt: "blog3",
       title: "Quy tắc 1%",

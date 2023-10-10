@@ -19,10 +19,10 @@ const UserReviewBlockquote = () => {
         <Blockquote>
           <BiSolidQuoteRight size={30} className="text-gray-900" />
           <p className="text-2xl font-semibold font-bold text-blue-800">
-            <p className="font-extrabold text-left">
+            <span className="font-extrabold text-left">
               Nhờ Khắc Kiến Thức, chúng tôi đã cùng nhau ôn tập các kiến thức
               Java, SQL, OCA,... cũng như ngoại ngữ một cách hiệu quả hơn.
-            </p>
+            </span>
           </p>
         </Blockquote>
         <figcaption className="flex items-center mt-1 space-x-3">
