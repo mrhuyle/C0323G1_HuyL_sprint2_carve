@@ -35,11 +35,12 @@ const Login = () => {
       };
       const response = await userServices.login(requestPayload);
       console.log(response?.data);
-      const token = response.data.token;
-      const jwtDecoded = jwt_decode(token);
+      const accessToken = response.data.access_token;
+      const jwtDecoded = jwt_decode(accessToken);
       const username = jwtDecoded.sub;
-      const role = jwtDecoded.role[0].authority;
-      setAuth({ username, pwd, role, token });
+      const role = jwtDecoded.role;
+      console.log(role);
+      setAuth({ username, pwd, role, accessToken });
       setUser("");
       setPWd("");
       setSuccess(true);

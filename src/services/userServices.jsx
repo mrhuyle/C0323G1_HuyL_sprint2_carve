@@ -16,3 +16,28 @@ export const login = async (requestPayload) => {
   });
   return response;
 };
+
+export const refreshToken = async (refreshToken) => {
+  const authorization = "Bearer " + refreshToken;
+  const response = await axios.post(
+    `${baseUrl}/refresh-token`,
+    {},
+    {
+      headers: {
+        Authorization: authorization,
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    }
+  );
+
+  return response;
+};
+
+export const getToken = () => {
+  return window.localStorage.getItem("token");
+};
+
+export const setToken = (token) => {
+  return window.localStorage.setItem("token", token);
+};

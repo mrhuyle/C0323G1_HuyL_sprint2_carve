@@ -6,6 +6,7 @@ import Register from "./components/Register";
 import Cart from "./components/Cart";
 import ProductDetail from "./components/ProductDetail";
 import RequireAuth from "./components/RequireAuth";
+import Unauthorized from "./components/Unauthorized";
 
 function App() {
   return (
@@ -15,7 +16,8 @@ function App() {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Register />}></Route>
         <Route path="/product_detail" element={<ProductDetail />}></Route>
-        <Route element={<RequireAuth />}>
+        <Route path="/unauthorized" element={<Unauthorized />}></Route>
+        <Route element={<RequireAuth allowedRoles={["ROLE_ADMIN"]} />}>
           <Route path="/cart" element={<Cart />}></Route>
         </Route>
       </Routes>
