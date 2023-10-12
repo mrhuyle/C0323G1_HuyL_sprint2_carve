@@ -17,27 +17,32 @@ export const login = async (requestPayload) => {
   return response;
 };
 
-export const refreshToken = async (refreshToken) => {
-  const authorization = "Bearer " + refreshToken;
+export const logout = async (accessToken) => {
+  console.log("TOKEN: " + accessToken);
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+    withCredentials: true,
+  };
+
+  const response = await axios.post(`${baseUrl}/logout`, null, config);
+  return response;
+};
+
+export const refreshToken = async () => {
   const response = await axios.post(
     `${baseUrl}/refresh-token`,
     {},
     {
       headers: {
-        Authorization: authorization,
         "Content-Type": "application/json",
       },
       withCredentials: true,
     }
   );
-
+  console.log(response.data);
   return response;
-};
-
-export const getToken = () => {
-  return window.localStorage.getItem("token");
-};
-
-export const setToken = (token) => {
-  return window.localStorage.setItem("token", token);
 };

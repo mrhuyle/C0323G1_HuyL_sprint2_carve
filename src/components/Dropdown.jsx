@@ -1,30 +1,44 @@
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { AiOutlineUser } from "react-icons/ai";
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "../context/AuthProvider";
 import Swal from "sweetalert2";
+import useAuth from "../hooks/useAuth";
+import * as userServices from "../services/userServices";
 
 const Dropdown = ({ username }) => {
-  const { setAuth } = useContext(AuthContext);
+  const { auth, setAuth, persist, setPersist } = useAuth();
   const navigate = useNavigate();
 
   const logOut = () => {
-    Swal.fire({
-      title: "Bạn có muốn đăng xuất?",
-      icon: "question",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      cancelButtonText: "Không",
-      confirmButtonText: "Đăng xuất",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        setAuth({});
-        navigate("/");
-      }
-    });
+    try {
+      Swal.fire({
+        title: "Bạn có muốn đăng xuất?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Không",
+        confirmButtonText: "Đăng xuất",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const accessToken = auth?.accessToken;
+          const response = await userServices.logout(accessToken);
+          if (response.status === 200) {
+            Swal.fire({
+              title: "Đăng xuất thành công",
+              icon: "success",
+              timer: 1500,
+            });
+          }
+          setAuth({});
+          setPersist(false);
+          navigate("/");
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

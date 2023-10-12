@@ -9,29 +9,24 @@ const PersistLogin = () => {
   const { auth, persist } = useAuth();
 
   useEffect(() => {
+    console.log("Start Persist Login");
     let isMounted = true;
 
     const verifyRefreshToken = async () => {
       try {
         await refresh();
+        console.log(auth?.accessToken);
       } catch (err) {
         console.error(err);
       } finally {
         isMounted && setIsLoading(false);
       }
     };
-
-    // persist added here AFTER tutorial video
-    // Avoids unwanted call to verifyRefreshToken
+    console.log(!auth?.accessToken && persist);
     !auth?.accessToken && persist ? verifyRefreshToken() : setIsLoading(false);
 
     return () => (isMounted = false);
   }, []);
-
-  useEffect(() => {
-    console.log(`isLoading: ${isLoading}`);
-    console.log(`aT: ${JSON.stringify(auth?.accessToken)}`);
-  }, [isLoading]);
 
   return (
     <>{!persist ? <Outlet /> : isLoading ? <p>Loading...</p> : <Outlet />}</>

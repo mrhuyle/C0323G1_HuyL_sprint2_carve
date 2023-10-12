@@ -1,13 +1,18 @@
 import React, { useState, useRef, useEffect } from "react";
 import useAuth from "../hooks/useAuth";
 import logo from "../assets/img/carve_logo_indigo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import successImg from "../assets/img/success.png";
 import jwt_decode from "jwt-decode";
 import * as userServices from "../services/userServices";
 
 const Login = () => {
-  const { setAuth } = useAuth();
+  const { setAuth, persist, setPersist } = useAuth();
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
   const userRef = useRef();
   const errRef = useRef();
 
@@ -44,6 +49,7 @@ const Login = () => {
       setUser("");
       setPWd("");
       setSuccess(true);
+      navigate(from, { replace: true });
     } catch (err) {
       console.log(err);
       if (!err?.response) {
@@ -54,6 +60,14 @@ const Login = () => {
       errRef.current.focus();
     }
   };
+
+  const togglePersist = () => {
+    setPersist((prev) => !prev);
+  };
+
+  useEffect(() => {
+    localStorage.setItem("persist", persist);
+  }, [persist]);
 
   return (
     <>
@@ -167,7 +181,8 @@ const Login = () => {
                           aria-describedby="remember"
                           type="checkbox"
                           className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 "
-                          required
+                          onChange={togglePersist}
+                          checked={persist}
                         />
                       </div>
                       <div className="ml-3 text-sm">
