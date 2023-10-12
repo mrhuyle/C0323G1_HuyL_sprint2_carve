@@ -8,6 +8,7 @@ import ProductDetail from "./components/ProductDetail";
 import RequireAuth from "./components/RequireAuth";
 import Unauthorized from "./components/Unauthorized";
 import PersistLogin from "./components/PersistLogin";
+import DashboardAdmin from "./components/DashboardAdmin";
 
 function App() {
   return (
@@ -16,10 +17,15 @@ function App() {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Register />}></Route>
         <Route element={<PersistLogin />}>
+          <Route element={<RequireAuth allowedRoles={["ROLE_ADMIN"]} />}>
+            <Route path="/admin/dashboard" element={<DashboardAdmin />}></Route>
+          </Route>
           <Route path="/" element={<Home />}></Route>
           <Route path="/product_detail" element={<ProductDetail />}></Route>
           <Route path="/unauthorized" element={<Unauthorized />}></Route>
-          <Route element={<RequireAuth allowedRoles={["ROLE_ADMIN"]} />}>
+          <Route
+            element={<RequireAuth allowedRoles={["ROLE_ADMIN", "ROLE_USER"]} />}
+          >
             <Route path="/cart" element={<Cart />}></Route>
           </Route>
         </Route>

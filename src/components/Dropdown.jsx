@@ -1,7 +1,7 @@
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { AiOutlineUser } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAuth from "../hooks/useAuth";
 import * as userServices from "../services/userServices";
@@ -61,54 +61,32 @@ const Dropdown = ({ username }) => {
         >
           <Menu.Items className="absolute right-0 w-full mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
             <div className="px-1 py-1 ">
-              <Menu.Item>
-                {({ active }) => (
-                  <button
-                    className={`${
-                      active
-                        ? "bg-brandPrimary text-white"
-                        : "text-brandPrimary"
-                    } group flex w-full items-center rounded-md px-2 py-2 text-base`}
-                  >
-                    {active ? (
-                      <EditActiveIcon
-                        className="w-5 h-5 mr-2"
-                        aria-hidden="true"
-                      />
-                    ) : (
-                      <EditInactiveIcon
-                        className="w-5 h-5 mr-2"
-                        aria-hidden="true"
-                      />
-                    )}
-                    Cài đặt
-                  </button>
-                )}
-              </Menu.Item>
-              <Menu.Item>
-                {({ active }) => (
-                  <button
-                    className={`${
-                      active
-                        ? "bg-brandPrimary text-white"
-                        : "text-brandPrimary"
-                    } group flex w-full items-center rounded-md px-2 py-2 text-base`}
-                  >
-                    {active ? (
-                      <DuplicateActiveIcon
-                        className="w-5 h-5 mr-2"
-                        aria-hidden="true"
-                      />
-                    ) : (
-                      <DuplicateInactiveIcon
-                        className="w-5 h-5 mr-2"
-                        aria-hidden="true"
-                      />
-                    )}
-                    Thông tin
-                  </button>
-                )}
-              </Menu.Item>
+              <Link to="/admin/dashboard">
+                <Menu.Item>
+                  {({ active }) => (
+                    <button
+                      className={`${
+                        active
+                          ? "bg-brandPrimary text-white"
+                          : "text-brandPrimary"
+                      } group flex w-full items-center rounded-md px-2 py-2 text-base`}
+                    >
+                      {active ? (
+                        <DuplicateActiveIcon
+                          className="w-5 h-5 mr-2"
+                          aria-hidden="true"
+                        />
+                      ) : (
+                        <DuplicateInactiveIcon
+                          className="w-5 h-5 mr-2"
+                          aria-hidden="true"
+                        />
+                      )}
+                      Chức năng
+                    </button>
+                  )}
+                </Menu.Item>
+              </Link>
             </div>
             <div className="px-1 py-1">
               <Menu.Item>
