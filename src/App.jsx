@@ -9,6 +9,7 @@ import RequireAuth from "./components/RequireAuth";
 import Unauthorized from "./components/Unauthorized";
 import PersistLogin from "./components/PersistLogin";
 import DashboardAdmin from "./components/DashboardAdmin";
+import ProductsList from "./components/crud/ProductsList";
 
 function App() {
   return (
@@ -18,7 +19,12 @@ function App() {
         <Route path="/register" element={<Register />}></Route>
         <Route element={<PersistLogin />}>
           <Route element={<RequireAuth allowedRoles={["ROLE_ADMIN"]} />}>
-            <Route path="/admin/dashboard" element={<DashboardAdmin />}></Route>
+            <Route path="/admin/dashboard" element={<DashboardAdmin />}>
+              <Route
+                path="/admin/dashboard/product"
+                element={<ProductsList />}
+              />
+            </Route>
           </Route>
           <Route path="/" element={<Home />}></Route>
           <Route path="/product_detail" element={<ProductDetail />}></Route>

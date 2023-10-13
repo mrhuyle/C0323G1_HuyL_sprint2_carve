@@ -12,12 +12,12 @@ const DashboardAdmin = () => {
       link: "/admin/dashboard/report",
       icon: TbReportAnalytics,
     },
-    { name: "Bộ thẻ", link: "/admin/dashboard/deck", icon: BsCardList },
+    { name: "Bộ thẻ", link: "/admin/dashboard/product", icon: BsCardList },
     { name: "Customers", link: "/dashboard/customers", icon: AiOutlineUser },
   ];
   const [open, setOpen] = useState(true);
   return (
-    <section className="flex gap-6">
+    <section className="flex">
       <div
         className={`bg-brandPrimary min-h-screen ${
           open ? "w-60" : "w-20"
@@ -86,7 +86,7 @@ const DashboardAdmin = () => {
           </h2>
         </div>
       </div>
-      <div className="flex justify-center w-full pt-8 m-3 text-xl font-semibold text-gray-900">
+      <div className="flex justify-center w-full pt-8 text-xl font-semibold text-gray-900 bg-gray-100">
         <Outlet />
       </div>
     </section>

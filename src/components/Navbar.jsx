@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import logo from "../assets/img/carve_logo_indigo.png";
 import * as Scroll from "react-scroll";
 import { FaXmark, FaBars } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import Dropdown from "./Dropdown";
 import useAuth from "../hooks/useAuth";
 
@@ -10,6 +10,8 @@ const Navbar = () => {
   const LinkScroll = Scroll.Link;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   // load auth
   const { auth } = useAuth();
@@ -18,6 +20,10 @@ const Navbar = () => {
   // set toggle Menu
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
+  };
+
+  const handleLogin = () => {
+    navigate("/login", { state: { from: location } });
   };
 
   useEffect(() => {
@@ -115,12 +121,12 @@ const Navbar = () => {
                 <Dropdown username={auth.username} />
               ) : (
                 <>
-                  <Link
-                    to="/login"
+                  <div
+                    onClick={handleLogin}
                     className="items-center hidden px-4 py-2 border-2 border-gray-300 rounded lg:flex text-brandPrimary hover:bg-brandPrimary hover:text-gray-100 hover:cursor-pointer"
                   >
                     Đăng nhập
-                  </Link>
+                  </div>
                   <Link to="/register">
                     <button className="flex items-center px-4 py-2 text-white transition-all duration-300 border-2 border-gray-300 rounded bg-brandPrimary hover:bg-indigo-400 hover:text-blue-800">
                       Đăng ký

@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import MyFooter from "./MyFooter";
 import Navbar from "./Navbar";
 import java from "../assets/img/java_cards.jpeg";
 import { BsCardList } from "react-icons/bs";
+import useAuth from "../hooks/useAuth";
 
 const ProductDetail = () => {
+  const { auth } = useAuth();
+
+  useEffect(() => {}, []);
+
   return (
     <>
       <Navbar />

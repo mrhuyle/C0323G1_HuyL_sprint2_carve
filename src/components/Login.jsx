@@ -11,7 +11,10 @@ const Login = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
+  const [prevPath, setPrevPath] = useState(
+    location.state?.from?.pathname || "/"
+  );
+  console.log(prevPath);
 
   const userRef = useRef();
   const errRef = useRef();
@@ -51,7 +54,7 @@ const Login = () => {
         icon: "success",
         timer: 1500,
       }).then(() => {
-        navigate(from, { replace: true });
+        navigate(prevPath, { replace: true });
       });
     } catch (err) {
       console.log(err);
