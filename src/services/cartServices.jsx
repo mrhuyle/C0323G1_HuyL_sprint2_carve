@@ -16,3 +16,18 @@ export const getCartItems = async (accessToken, username) => {
   );
   return response;
 };
+
+export const deleteCartItemById = async (accessToken, id) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+    withCredentials: true,
+  };
+  const response = await axios.delete(
+    `${baseUrl}/delete-item?id=${id}`,
+    config
+  );
+  return response;
+};

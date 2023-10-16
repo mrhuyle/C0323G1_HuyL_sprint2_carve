@@ -5,6 +5,7 @@ import useAuth from "../hooks/useAuth";
 import * as cartServices from "../services/cartServices";
 import { Link } from "react-router-dom";
 import { BiCheckboxChecked, BiTrash } from "react-icons/bi";
+import Swal from "sweetalert2";
 
 const formatNumber = (number) => {
   const formattedNumber = number || 0; // Use 0 if number is undefined or null
@@ -29,16 +30,26 @@ const Cart = () => {
       );
       console.log(response.data);
       setCartItems(response.data);
-      setCheckItems(response.data);
-      updateSum(response.data);
       setDiscount(response.data[0].discount);
+      return response.data;
     } catch (err) {
       console.log(err);
     }
   };
 
   useEffect(() => {
-    getCartItems();
+    const fetchData = async () => {
+      try {
+        const initialList = await getCartItems();
+        console.log(initialList);
+        setCheckItems(initialList);
+        updateSum(initialList);
+      } catch (error) {
+        console.error("Error fetching cart items:", error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -48,19 +59,24 @@ const Cart = () => {
   const handleCheckboxChange = (e, item) => {
     const isChecked = e.target.checked;
 
-    if (isChecked) {
-      setCheckItems((prevCheckItems) => [...prevCheckItems, item]);
-    } else {
-      setCheckItems((prevCheckItems) =>
-        prevCheckItems.filter(
+    setCheckItems((prevCheckItems) => {
+      if (isChecked) {
+        return [...prevCheckItems, item];
+      } else {
+        if (!Array.isArray(prevCheckItems) || prevCheckItems.length === 0) {
+          return [item];
+        }
+        return prevCheckItems.filter(
           (checkItem) => checkItem.cartItemId !== item.cartItemId
-        )
-      );
-    }
+        );
+      }
+    });
   };
 
   const updateSum = (items) => {
-    if (items == []) {
+    if (!Array.isArray(items) || items.length === 0) {
+      console.log("return update");
+      setSum(0);
       return;
     }
     let totalSum = 0;
@@ -70,12 +86,56 @@ const Cart = () => {
     setSum(totalSum);
   };
 
+  const handleDeleteCartItem = async (cartItem) => {
+    try {
+      const confirmResult = await Swal.fire({
+        title: "Bạn có muốn xoá sản phẩm?",
+        text: cartItem.deckName,
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Không",
+        confirmButtonText: "Xoá",
+      });
+
+      if (confirmResult.isConfirmed) {
+        console.log(auth?.accessToken);
+        const response = await cartServices.deleteCartItemById(
+          auth?.accessToken,
+          cartItem.cartItemId
+        );
+
+        if (response?.status === 200) {
+          Swal.fire({
+            title: "Đã xoá sản phẩm khỏi giỏ hàng",
+            icon: "success",
+            timer: 1500,
+          });
+
+          // Update the checked items and recalculate the sum
+          const updatedCheckItems = checkItems.filter(
+            (checkItem) => checkItem.cartItemId !== cartItem.cartItemId
+          );
+
+          // Update the state
+          setCheckItems(updatedCheckItems);
+
+          // Recalculate the sum
+          updateSum(updatedCheckItems);
+          getCartItems();
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
-      <Navbar />
+      <Navbar numberItem={cartItems.length} />
 
       {/* cart */}
-      <div className="h-screen pt-20 pb-20 bg-gray-100">
+      <div className="pt-20 pb-20 bg-gray-100">
         <div className="container px-4 mx-auto">
           <div className="pt-3 pb-2 mx-auto mt-6 mb-5 italic font-extrabold leading-relaxed text-center rounded-2xl md:w-1/2">
             <h2 className="mb-3 text-4xl font-semibold text-brandPrimary head-title">
@@ -163,6 +223,9 @@ const Cart = () => {
                               <button
                                 type="button"
                                 className="text-red-500 border border-red-500 hover:bg-red-400 hover:text-white focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2"
+                                onClick={() => {
+                                  handleDeleteCartItem(item);
+                                }}
                               >
                                 <BiTrash />
                               </button>
@@ -179,8 +242,8 @@ const Cart = () => {
                   </div>
                 </Link>
               </div>
-              <div className="md:w-1/4">
-                <div className="p-6 bg-white rounded-lg shadow-md">
+              <div className="relative md:w-1/4">
+                <div className="sticky p-6 bg-white rounded-lg shadow-md top-20">
                   <h2 className="mb-4 text-lg font-semibold">Tổng hợp</h2>
                   <div className="flex justify-between mb-2">
                     <span>Tạm tính</span>

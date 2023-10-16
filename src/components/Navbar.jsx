@@ -7,7 +7,7 @@ import Dropdown from "./Dropdown";
 import useAuth from "../hooks/useAuth";
 import * as cartServices from "../services/cartServices";
 
-const Navbar = () => {
+const Navbar = ({ numberItem: numberItemsProp }) => {
   const LinkScroll = Scroll.Link;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
@@ -36,6 +36,10 @@ const Navbar = () => {
       console.log(err);
     }
   };
+
+  useEffect(() => {
+    setNumberItems(numberItemsProp);
+  }, [numberItemsProp]);
 
   useEffect(() => {
     getCartItems();
