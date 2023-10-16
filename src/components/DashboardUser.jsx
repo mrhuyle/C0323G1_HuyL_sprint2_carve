@@ -1,21 +1,19 @@
 import React, { useState } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
-import { TbReportAnalytics } from "react-icons/tb";
-import { AiOutlineUser, AiOutlineHome } from "react-icons/ai";
-import { BsCardList } from "react-icons/bs";
+import { AiOutlineHome } from "react-icons/ai";
+import { BiInfoCircle } from "react-icons/bi";
 import { Link, Outlet } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
-const DashboardAdmin = () => {
+const DashboardUser = () => {
   const { auth } = useAuth();
+
   const menus = [
     {
-      name: "Báo cáo",
-      link: "/admin/dashboard/report",
-      icon: TbReportAnalytics,
+      name: "Thông tin",
+      link: "/user/dashboard/setting",
+      icon: BiInfoCircle,
     },
-    { name: "Bộ thẻ", link: "/admin/dashboard/product", icon: BsCardList },
-    { name: "Customers", link: "/dashboard/customers", icon: AiOutlineUser },
   ];
   const [open, setOpen] = useState(true);
   return (
@@ -95,4 +93,4 @@ const DashboardAdmin = () => {
   );
 };
 
-export default DashboardAdmin;
+export default DashboardUser;

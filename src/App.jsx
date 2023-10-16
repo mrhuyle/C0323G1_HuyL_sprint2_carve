@@ -9,7 +9,9 @@ import RequireAuth from "./components/RequireAuth";
 import Unauthorized from "./components/Unauthorized";
 import PersistLogin from "./components/PersistLogin";
 import DashboardAdmin from "./components/DashboardAdmin";
+import DashboardUser from "./components/DashboardUser";
 import ProductsList from "./components/crud/ProductsList";
+import UserSetting from "./components/crud/UserSetting";
 
 function App() {
   return (
@@ -24,6 +26,11 @@ function App() {
                 path="/admin/dashboard/product"
                 element={<ProductsList />}
               />
+            </Route>
+          </Route>
+          <Route element={<RequireAuth allowedRoles={["ROLE_USER"]} />}>
+            <Route path="/user/dashboard" element={<DashboardUser />}>
+              <Route path="/user/dashboard/setting" element={<UserSetting />} />
             </Route>
           </Route>
           <Route path="/" element={<Home />}></Route>

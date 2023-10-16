@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const baseUrl = "http://localhost:8080/home";
+export const baseUrl = "http://localhost:8080/api/home";
 
 export const getLatestDecks = async () => {
   const config = {

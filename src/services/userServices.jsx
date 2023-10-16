@@ -1,6 +1,7 @@
 import axios from "axios";
 
-export const baseUrl = "http://localhost:8080/api/v1/auth";
+const baseUrl = "http://localhost:8080/api/v1/auth";
+const userUrl = "http://localhost:8080/api/user";
 
 export const register = async (requestPayload) => {
   const response = await axios.post(`${baseUrl}/register`, requestPayload, {
@@ -18,8 +19,6 @@ export const login = async (requestPayload) => {
 };
 
 export const logout = async (accessToken) => {
-  console.log("TOKEN: " + accessToken);
-
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -44,5 +43,20 @@ export const refreshToken = async () => {
     }
   );
   console.log(response.data);
+  return response;
+};
+
+export const getUserInformation = async (accessToken, username) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+    withCredentials: true,
+  };
+  const response = await axios.get(
+    `${userUrl}/get-user-info?username=${username}`,
+    config
+  );
   return response;
 };

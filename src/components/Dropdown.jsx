@@ -1,14 +1,15 @@
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-import { AiOutlineUser } from "react-icons/ai";
 import { useNavigate, Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAuth from "../hooks/useAuth";
 import * as userServices from "../services/userServices";
+import UserAvatar from "./UserAvatar";
 
 const Dropdown = ({ username }) => {
   const { auth, setAuth, persist, setPersist } = useAuth();
   const navigate = useNavigate();
+  const roles = auth?.role;
 
   const logOut = () => {
     try {
@@ -45,8 +46,8 @@ const Dropdown = ({ username }) => {
     <div>
       <Menu as="div" className="relative inline-block w-40 text-left min-w-min">
         <div className="flex items-center justify-between">
-          <Menu.Button className="items-center hidden w-full px-4 py-2 border-2 border-gray-300 rounded lg:flex text-brandPrimary hover:bg-brandPrimary hover:text-gray-100 hover:cursor-pointer">
-            <AiOutlineUser className="me-2" />
+          <Menu.Button className="items-center justify-start hidden w-full gap-2 px-4 py-2 border-2 border-gray-300 rounded lg:flex text-brandPrimary hover:bg-brandPrimary hover:text-gray-100 hover:cursor-pointer">
+            <UserAvatar />
             {username}
           </Menu.Button>
         </div>
@@ -61,32 +62,61 @@ const Dropdown = ({ username }) => {
         >
           <Menu.Items className="absolute right-0 w-full mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
             <div className="px-1 py-1 ">
-              <Link to="/admin/dashboard">
-                <Menu.Item>
-                  {({ active }) => (
-                    <button
-                      className={`${
-                        active
-                          ? "bg-brandPrimary text-white"
-                          : "text-brandPrimary"
-                      } group flex w-full items-center rounded-md px-2 py-2 text-base`}
-                    >
-                      {active ? (
-                        <DuplicateActiveIcon
-                          className="w-5 h-5 mr-2"
-                          aria-hidden="true"
-                        />
-                      ) : (
-                        <DuplicateInactiveIcon
-                          className="w-5 h-5 mr-2"
-                          aria-hidden="true"
-                        />
-                      )}
-                      Chức năng
-                    </button>
-                  )}
-                </Menu.Item>
-              </Link>
+              {roles.some((role) => role.authority === "ROLE_ADMIN") ? (
+                <Link to="/admin/dashboard">
+                  <Menu.Item>
+                    {({ active }) => (
+                      <button
+                        className={`${
+                          active
+                            ? "bg-brandPrimary text-white"
+                            : "text-brandPrimary"
+                        } group flex w-full items-center rounded-md px-2 py-2 text-base`}
+                      >
+                        {active ? (
+                          <DuplicateActiveIcon
+                            className="w-5 h-5 mr-2"
+                            aria-hidden="true"
+                          />
+                        ) : (
+                          <DuplicateInactiveIcon
+                            className="w-5 h-5 mr-2"
+                            aria-hidden="true"
+                          />
+                        )}
+                        Chức năng
+                      </button>
+                    )}
+                  </Menu.Item>
+                </Link>
+              ) : (
+                <Link to="/user/dashboard/setting">
+                  <Menu.Item>
+                    {({ active }) => (
+                      <button
+                        className={`${
+                          active
+                            ? "bg-brandPrimary text-white"
+                            : "text-brandPrimary"
+                        } group flex w-full items-center rounded-md px-2 py-2 text-base`}
+                      >
+                        {active ? (
+                          <DuplicateActiveIcon
+                            className="w-5 h-5 mr-2"
+                            aria-hidden="true"
+                          />
+                        ) : (
+                          <DuplicateInactiveIcon
+                            className="w-5 h-5 mr-2"
+                            aria-hidden="true"
+                          />
+                        )}
+                        Chức năng
+                      </button>
+                    )}
+                  </Menu.Item>
+                </Link>
+              )}
             </div>
             <div className="px-1 py-1">
               <Menu.Item>
@@ -96,7 +126,7 @@ const Dropdown = ({ username }) => {
                       active
                         ? "bg-brandPrimary text-white"
                         : "text-brandPrimary"
-                    } group flex w-full items-center rounded-md px-2 py-2 text-base`}
+                    } group flex w-full items-center rounded-md gap-1 px-2 py-2 text-base`}
                     onClick={logOut}
                   >
                     {active ? (
@@ -123,42 +153,6 @@ const Dropdown = ({ username }) => {
 };
 
 export default Dropdown;
-
-function EditInactiveIcon(props) {
-  return (
-    <svg
-      {...props}
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M4 13V16H7L16 7L13 4L4 13Z"
-        fill="#EDE9FE"
-        stroke="#6499E9"
-        strokeWidth="2"
-      />
-    </svg>
-  );
-}
-
-function EditActiveIcon(props) {
-  return (
-    <svg
-      {...props}
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M4 13V16H7L16 7L13 4L4 13Z"
-        fill="#8B5CF6"
-        stroke="#6499E9"
-        strokeWidth="2"
-      />
-    </svg>
-  );
-}
 
 function DuplicateInactiveIcon(props) {
   return (
@@ -239,37 +233,6 @@ function ArchiveInactiveIcon(props) {
   );
 }
 
-function ArchiveActiveIcon(props) {
-  return (
-    <svg
-      {...props}
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <rect
-        x="5"
-        y="8"
-        width="10"
-        height="8"
-        fill="#8B5CF6"
-        stroke="#C4B5FD"
-        strokeWidth="2"
-      />
-      <rect
-        x="4"
-        y="4"
-        width="12"
-        height="4"
-        fill="#8B5CF6"
-        stroke="#C4B5FD"
-        strokeWidth="2"
-      />
-      <path d="M8 12H12" stroke="#A78BFA" strokeWidth="2" />
-    </svg>
-  );
-}
-
 function MoveInactiveIcon(props) {
   return (
     <svg
@@ -319,29 +282,6 @@ function DeleteInactiveIcon(props) {
       />
       <path d="M3 6H17" stroke="#A78BFA" strokeWidth="2" />
       <path d="M8 6V4H12V6" stroke="#A78BFA" strokeWidth="2" />
-    </svg>
-  );
-}
-
-function DeleteActiveIcon(props) {
-  return (
-    <svg
-      {...props}
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <rect
-        x="5"
-        y="6"
-        width="10"
-        height="10"
-        fill="#8B5CF6"
-        stroke="#C4B5FD"
-        strokeWidth="2"
-      />
-      <path d="M3 6H17" stroke="#C4B5FD" strokeWidth="2" />
-      <path d="M8 6V4H12V6" stroke="#C4B5FD" strokeWidth="2" />
     </svg>
   );
 }

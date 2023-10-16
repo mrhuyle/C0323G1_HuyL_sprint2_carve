@@ -3,12 +3,16 @@ import { Card } from "flowbite-react";
 import { Link } from "react-router-dom";
 
 const formatNumber = (number) => {
-  return number.toLocaleString("vi", { style: "currency", currency: "VND" });
+  const formattedNumber = number || 0;
+  return formattedNumber.toLocaleString("vi", {
+    style: "currency",
+    currency: "VND",
+  });
 };
 const cardStyle = {
-  objectFit: "cover", // This will make the image fit within the Card
-  width: "100%", // Ensure the image takes the full width of the Card
-  height: "140px", // Ensure the image takes the full height of the Card
+  objectFit: "cover",
+  width: "100%",
+  height: "140px",
 };
 
 const ProductCard = ({ product }) => {

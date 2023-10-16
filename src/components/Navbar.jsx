@@ -5,6 +5,7 @@ import { FaXmark, FaBars } from "react-icons/fa6";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Dropdown from "./Dropdown";
 import useAuth from "../hooks/useAuth";
+import * as cartServices from "../services/cartServices";
 
 const Navbar = () => {
   const LinkScroll = Scroll.Link;
@@ -12,6 +13,8 @@ const Navbar = () => {
   const [isSticky, setIsSticky] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+
+  const [numberItems, setNumberItems] = useState(0);
 
   // load auth
   const { auth } = useAuth();
@@ -21,6 +24,22 @@ const Navbar = () => {
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
   };
+
+  const getCartItems = async () => {
+    try {
+      const response = await cartServices.getCartItems(
+        auth?.accessToken,
+        auth?.username
+      );
+      setNumberItems(response?.data.length);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getCartItems();
+  }, []);
 
   const handleLogin = () => {
     navigate("/login", { state: { from: location } });
@@ -96,7 +115,7 @@ const Navbar = () => {
               <div className="relative cursor-pointer">
                 <div className="absolute t-0 left-3">
                   <p className="flex items-center justify-center w-1 h-1 p-2 text-xs text-white bg-red-500 rounded-full">
-                    3
+                    {numberItems ? numberItems : 0}
                   </p>
                 </div>
                 <Link to="/cart">

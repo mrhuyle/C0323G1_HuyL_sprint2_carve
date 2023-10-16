@@ -3,7 +3,7 @@ import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
-import { Navigation } from "swiper/modules";
+import { Navigation, Autoplay } from "swiper/modules";
 
 import ProductCard from "./ProductCard";
 
@@ -70,7 +70,7 @@ const ProductsSlider = ({ decks, title, next, prev }) => {
 
       <div>
         <Swiper
-          modules={[Navigation]}
+          modules={[Autoplay, Navigation]}
           navigation={{
             nextEl: `.${next}`,
             prevEl: `.${prev}`,
@@ -78,7 +78,10 @@ const ProductsSlider = ({ decks, title, next, prev }) => {
           slidesPerView={5}
           spaceBetween={10}
           speed={500}
-          autoplay={{ delay: 3000 }}
+          autoplay={{
+            delay: 3000,
+            disableOnInteraction: false,
+          }}
           className="mySwiper"
         >
           {decks?.map((deck, index) => (
