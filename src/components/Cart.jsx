@@ -3,20 +3,25 @@ import MyFooter from "./MyFooter";
 import Navbar from "./Navbar";
 import useAuth from "../hooks/useAuth";
 import * as cartServices from "../services/cartServices";
-import { Link } from "react-router-dom";
+import * as orderServices from "../services/orderServices";
+import { Link, useNavigate } from "react-router-dom";
 import { BiCheckboxChecked, BiTrash } from "react-icons/bi";
 import Swal from "sweetalert2";
+import useCartContext from "../hooks/useCartContext";
 
 const formatNumber = (number) => {
-  const formattedNumber = number || 0; // Use 0 if number is undefined or null
-  return formattedNumber.toLocaleString("vi", {
+  const roundedNumber = Math.floor(number);
+  const formattedNumber = roundedNumber.toLocaleString("vi", {
     style: "currency",
     currency: "VND",
   });
+  return formattedNumber;
 };
 
 const Cart = () => {
   const { auth } = useAuth();
+  const navigate = useNavigate();
+  const { cart, setCart } = useCartContext();
   const [cartItems, setCartItems] = useState([]);
   const [checkItems, setCheckItems] = useState([]);
   const [discount, setDiscount] = useState("");
@@ -30,6 +35,7 @@ const Cart = () => {
       );
       console.log(response.data);
       setCartItems(response.data);
+      setCart(response.data);
       setDiscount(response.data[0].discount);
       return response.data;
     } catch (err) {
@@ -71,6 +77,69 @@ const Cart = () => {
         );
       }
     });
+  };
+
+  const getCartItemIds = () => {
+    const listCartItemIds = checkItems.map((item) => item.cartItemId);
+    return listCartItemIds;
+  };
+
+  const handleConfirmOrder = () => {
+    const listCartItemIds = getCartItemIds();
+    if (listCartItemIds.length == 0) {
+      Swal.fire({
+        title: "Bạn chưa chọn sản phẩm nào",
+        icon: "warning",
+        showCloseButton: true,
+      });
+      return;
+    } else {
+      Swal.fire({
+        title: "Bạn có muốn tạo đơn hàng với các sản phẩm đã chọn?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Không",
+        confirmButtonText: "Tạo đơn hàng",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const data = {
+            discount: discount,
+            total: Math.floor(sum * ((100 - discount) / 100)),
+            cartId: cartItems[0].cartId,
+            listCartItemIds: listCartItemIds,
+          };
+          console.log(data);
+          try {
+            const response = await orderServices.createOrder(
+              auth?.accessToken,
+              data
+            );
+            const orderId = response.data;
+            console.log(orderId);
+            if (response.status == 201) {
+              Swal.fire({
+                title: "Đã tạo đơn hàng thành công",
+                icon: "success",
+                showCloseButton: true,
+              });
+              getCartItems();
+              navigate(`/confirm-order/${orderId}`);
+            }
+          } catch (err) {
+            console.log(err);
+            if (err.response?.status == 409) {
+              Swal.fire({
+                title: "Lỗi tạo đơn hàng",
+                icon: "error",
+                showCloseButton: true,
+              });
+            }
+          }
+        }
+      });
+    }
   };
 
   const updateSum = (items) => {
@@ -132,7 +201,7 @@ const Cart = () => {
 
   return (
     <>
-      <Navbar numberItem={cartItems.length} />
+      <Navbar />
 
       {/* cart */}
       <div className="pt-20 pb-20 bg-gray-100">
@@ -262,8 +331,11 @@ const Cart = () => {
                       </span>
                     )}
                   </div>
-                  <button className="w-full px-4 py-2 mt-4 text-white bg-blue-500 rounded-lg">
-                    Thanh toán
+                  <button
+                    onClick={handleConfirmOrder}
+                    className="w-full px-4 py-2 mt-4 text-white bg-blue-500 rounded-lg"
+                  >
+                    Đặt hàng
                   </button>
                 </div>
               </div>

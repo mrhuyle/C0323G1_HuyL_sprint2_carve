@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Card } from "flowbite-react";
 import { Link } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
+import * as cartServices from "../services/cartServices";
+import Swal from "sweetalert2";
+import useCartContext from "../hooks/useCartContext";
 
 const formatNumber = (number) => {
   const formattedNumber = number || 0;
@@ -9,6 +13,7 @@ const formatNumber = (number) => {
     currency: "VND",
   });
 };
+
 const cardStyle = {
   objectFit: "cover",
   width: "100%",
@@ -16,10 +21,69 @@ const cardStyle = {
 };
 
 const ProductCard = ({ product }) => {
+  const { cart, setCart } = useCartContext();
+
+  const { auth } = useAuth();
+  const [cartId, setCartId] = useState("");
+
+  const getCartIdByUsername = async () => {
+    try {
+      const response = await cartServices.getCartIdByUsername(
+        auth?.accessToken,
+        auth?.username
+      );
+      console.log(response.data);
+      setCartId(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getCartIdByUsername();
+  }, []);
+
   const actualPriceFormatted = formatNumber(
     product.price * ((100 - product.promoPercent) / 100)
   );
   const priceFormatted = formatNumber(product.price);
+
+  const handleBuyProduct = async () => {
+    try {
+      const data = {
+        cartId: cartId,
+        deckId: product.id,
+      };
+      const response = await cartServices.addCartItem(auth?.accessToken, data);
+      console.log(response);
+      if (response.status == 200) {
+        Swal.fire({
+          title: "Đã thêm vào giỏ hàng",
+          text: product.name,
+          icon: "success",
+          timer: 1500,
+        });
+        setCart([...cart, product]);
+      }
+    } catch (err) {
+      console.log(err);
+      if (err?.response.status == 409) {
+        Swal.fire({
+          title: "Sản phẩm đã có trong giỏ hàng",
+          text: product.name,
+          showCloseButton: "true",
+          icon: "warning",
+        });
+      } else {
+        Swal.fire({
+          title: "Lỗi kết nối trong lúc mua hàng",
+          text: product.name,
+          icon: "warning",
+          timer: 1500,
+        });
+      }
+    }
+  };
   return (
     <div className="hover:scale-95 hover:transition-transform">
       <Card imgAlt="product">
@@ -47,12 +111,12 @@ const ProductCard = ({ product }) => {
               {priceFormatted}
             </span>
           </div>
-          <a
+          <button
+            onClick={() => handleBuyProduct()}
             className="rounded-lg bg-buttonColor px-3 py-2.5 text-center text-base font-medium text-blue-800 hover:bg-brandPrimary hover:text-white focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800"
-            href="#"
           >
-            <p>Mua</p>
-          </a>
+            Mua
+          </button>
         </div>
       </Card>
     </div>

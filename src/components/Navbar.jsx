@@ -6,15 +6,16 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import Dropdown from "./Dropdown";
 import useAuth from "../hooks/useAuth";
 import * as cartServices from "../services/cartServices";
+import useCartContext from "../hooks/useCartContext";
 
-const Navbar = ({ numberItem: numberItemsProp }) => {
+const Navbar = () => {
+  const { cart, setCart } = useCartContext();
+
   const LinkScroll = Scroll.Link;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-
-  const [numberItems, setNumberItems] = useState(0);
 
   // load auth
   const { auth } = useAuth();
@@ -31,15 +32,11 @@ const Navbar = ({ numberItem: numberItemsProp }) => {
         auth?.accessToken,
         auth?.username
       );
-      setNumberItems(response?.data.length);
+      setCart(response.data);
     } catch (err) {
       console.log(err);
     }
   };
-
-  useEffect(() => {
-    setNumberItems(numberItemsProp);
-  }, [numberItemsProp]);
 
   useEffect(() => {
     getCartItems();
@@ -116,29 +113,32 @@ const Navbar = ({ numberItem: numberItemsProp }) => {
             {/* btn for large devices */}
             <div className="items-center hidden space-x-8 lg:flex">
               {/* cart */}
-              <div className="relative cursor-pointer">
-                <div className="absolute t-0 left-3">
-                  <p className="flex items-center justify-center w-1 h-1 p-2 text-xs text-white bg-red-500 rounded-full">
-                    {numberItems ? numberItems : 0}
-                  </p>
+              {auth?.username && (
+                <div className="relative cursor-pointer">
+                  <div className="absolute t-0 left-3">
+                    <p className="flex items-center justify-center w-1 h-1 p-2 text-xs text-white bg-red-500 rounded-full">
+                      {cart?.length || "0"}
+                    </p>
+                  </div>
+                  <Link to="/cart">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                      className="mt-3 w-7 h-7 text-brandPrimary"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+                      />
+                    </svg>
+                  </Link>
                 </div>
-                <Link to="/cart">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="mt-3 w-7 h-7 text-brandPrimary"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
-                    />
-                  </svg>
-                </Link>
-              </div>
+              )}
+
               {/* Dropdown */}
               {auth?.username ? (
                 <Dropdown username={auth.username} />
