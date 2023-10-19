@@ -18,8 +18,14 @@ const formatNumber = (number) => {
   return formattedNumber;
 };
 
-const result = formatNumber(48212.5);
-console.log(result);
+const formatDate = (inputDateString) => {
+  const inputDate = new Date(inputDateString);
+  const day = String(inputDate.getDate()).padStart(2, "0");
+  const month = String(inputDate.getMonth() + 1).padStart(2, "0");
+  const year = inputDate.getFullYear();
+
+  return `${day}/${month}/${year}`;
+};
 
 const Invoice = () => {
   const { auth } = useAuth();
@@ -29,6 +35,8 @@ const Invoice = () => {
   const [orderItems, setOrderItems] = useState([]);
   const [username, setUsername] = useState("");
   const [discount, setDiscount] = useState("");
+  const [code, setCode] = useState("");
+  const [createdTime, setCreatedTime] = useState("");
   const [sum, setSum] = useState(0);
 
   const getCartItems = async () => {
@@ -56,6 +64,8 @@ const Invoice = () => {
       console.log(response);
       setOrderItems(response.data);
       setDiscount(response.data[0].discount);
+      setCode(response.data[0].orderCode);
+      setCreatedTime(response.data[0].createdTime);
       updateSum(response.data);
       setUsername(response.data[0].username);
     } catch (err) {
@@ -116,10 +126,13 @@ const Invoice = () => {
               <div>
                 <p className="pb-3 text-4xl font-bold">HÓA ĐƠN</p>
                 <p className="text-sm font-bold">
-                  SỐ HĐ: <span className="pl-1 font-normal">0001</span>
+                  SỐ HĐ: <span className="pl-1 font-normal">{code}</span>
                 </p>
                 <p className="text-sm font-bold">
-                  NGÀY HĐ: <span className="pl-1 font-normal">02/15/2002</span>
+                  NGÀY HĐ:{" "}
+                  <span className="pl-1 font-normal">
+                    {formatDate(createdTime)}
+                  </span>
                 </p>
               </div>
               <div className="pl-2 text-right">

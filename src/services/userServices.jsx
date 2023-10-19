@@ -60,3 +60,16 @@ export const getUserInformation = async (accessToken, username) => {
   );
   return response;
 };
+
+export const saveImg = async (accessToken, data) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+    withCredentials: true,
+  };
+  const response = await axios.post(`${userUrl}/save-img`, data, config);
+  console.log(response);
+  return response;
+};

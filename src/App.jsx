@@ -14,6 +14,7 @@ import ProductsList from "./components/crud/ProductsList";
 import UserSetting from "./components/crud/UserSetting";
 import Invoice from "./components/Invoice";
 import ConfirmOrder from "./components/ConfirmOrder";
+import UploadWidget from "./components/UploadWidget";
 
 function App() {
   return (
