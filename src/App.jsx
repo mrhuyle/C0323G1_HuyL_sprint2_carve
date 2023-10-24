@@ -14,7 +14,6 @@ import ProductsList from "./components/crud/ProductsList";
 import UserSetting from "./components/crud/UserSetting";
 import Invoice from "./components/Invoice";
 import ConfirmOrder from "./components/ConfirmOrder";
-import UploadWidget from "./components/UploadWidget";
 
 function App() {
   return (
@@ -37,7 +36,6 @@ function App() {
             </Route>
             <Route path="/cart" element={<Cart />} />
             <Route path="/confirm-order/:id" element={<ConfirmOrder />} />
-            <Route path="/invoice" element={<Invoice />} />
           </Route>
           <Route path="/" element={<Home />}></Route>
           <Route path="/product_detail" element={<ProductDetail />} />
@@ -46,6 +44,7 @@ function App() {
             element={<RequireAuth allowedRoles={["ROLE_ADMIN", "ROLE_USER"]} />}
           >
             <Route path="/cart" element={<Cart />} />
+            <Route path="/invoice" element={<Invoice />} />
           </Route>
         </Route>
       </Routes>

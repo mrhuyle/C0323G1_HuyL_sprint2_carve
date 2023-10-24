@@ -14,7 +14,7 @@ export const createOrder = async (accessToken, data) => {
   return response;
 };
 
-export const getOrderById = async (accessToken, id) => {
+export const saveInvoice = async (accessToken, data) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -22,6 +22,6 @@ export const getOrderById = async (accessToken, id) => {
     },
     withCredentials: true,
   };
-  const response = await axios.get(`${baseUrl}/get?id=${id}`, config);
+  const response = await axios.post(`${baseUrl}/save-invoice`, data, config);
   return response;
 };

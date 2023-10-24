@@ -1,6 +1,9 @@
 import { useEffect, useRef } from "react";
 
 const UploadWidget = ({ tag, onImageUpload }) => {
+  const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+  const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
+
   const cloudinaryRef = useRef();
   const widgetRef = useRef();
   useEffect(() => {
@@ -8,8 +11,8 @@ const UploadWidget = ({ tag, onImageUpload }) => {
     console.log(cloudinaryRef.current);
     widgetRef.current = cloudinaryRef.current.createUploadWidget(
       {
-        cloudName: "dkkiwh0al",
-        uploadPreset: "k2bonczy",
+        cloudName: cloudName,
+        uploadPreset: uploadPreset,
       },
       function (error, result) {
         if (!error && result && result.event === "success") {

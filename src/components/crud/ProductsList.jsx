@@ -1,10 +1,45 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import { BiMessageAltAdd, BiEdit, BiTrash } from "react-icons/bi";
 import { AiOutlineLeftCircle, AiOutlineRightCircle } from "react-icons/ai";
+import * as deckServices from "../../services/deckServices";
+
+const formatNumber = (number) => {
+  const roundedNumber = Math.floor(number);
+  const formattedNumber = roundedNumber.toLocaleString("vi", {
+    style: "currency",
+    currency: "VND",
+  });
+  return formattedNumber;
+};
+
+const formatDate = (inputDateString) => {
+  const inputDate = new Date(inputDateString);
+  const day = String(inputDate.getDate()).padStart(2, "0");
+  const month = String(inputDate.getMonth() + 1).padStart(2, "0");
+  const year = inputDate.getFullYear();
+
+  return `${day}/${month}/${year}`;
+};
 
 const ProductsList = () => {
+  const [latestDecks, setLatestDecks] = useState([]);
+
+  const getLatestDecks = async () => {
+    try {
+      const response = await deckServices.getLatestDecks();
+      console.log(response.data);
+      setLatestDecks(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getLatestDecks();
+  }, []);
+
   return (
     <div className="relative w-full mr-8 -translate-x-1/2 shadow-md sm:rounded-lg left-1/2">
       <h1 className="text-center capitalize">BỘ THẺ</h1>
@@ -51,19 +86,19 @@ const ProductsList = () => {
               #
             </th>
             <th scope="col" className="px-6 py-3">
-              Code
+              Tên
             </th>
             <th scope="col" className="px-6 py-3">
-              Start Date
+              Giá
             </th>
             <th scope="col" className="px-6 py-3">
-              End Date
+              Khuyến mãi
             </th>
             <th scope="col" className="px-6 py-3">
-              Deposit
+              Số thẻ
             </th>
             <th scope="col" className="px-6 py-3">
-              Total
+              Ngày tạo
             </th>
             <th scope="col" className="px-6 py-3 text-center">
               Actions
@@ -71,53 +106,58 @@ const ProductsList = () => {
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          <tr className="bg-white border-b hover:bg-gray-50 dark:hover:bg-green-100">
-            <td className="w-4 p-4">
-              <div className="flex items-center">
-                <input
-                  id="checkbox-{{ .id }}"
-                  aria-describedby="checkbox-1"
-                  type="checkbox"
-                  className="w-4 h-4 border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:focus:ring-primary-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600"
-                />
-                <label htmlFor="checkbox-{{ .id }}" className="sr-only">
-                  checkbox
-                </label>
-              </div>
-            </td>
-            <th
-              scope="row"
-              className="px-6 py-3 font-semibold text-gray-800 whitespace-nowrap dark:text-gray-400"
+          {latestDecks?.map((item, index) => (
+            <tr
+              key={index}
+              className="bg-white border-b hover:bg-gray-50 dark:hover:bg-green-100"
             >
-              1
-            </th>
-            <th
-              scope="row"
-              className="px-6 py-3 font-semibold text-gray-800 whitespace-nowrap dark:text-gray-400"
-            >
-              Code
-            </th>
-            <td className="px-6 py-3">StartDate</td>
-            <td className="px-6 py-3">EndDate</td>
-            <td className="px-6 py-3">Deposit</td>
-            <td className="px-6 py-3">Total</td>
-            <td className="flex items-center justify-around gap-4 px-6 py-3">
-              <button
-                type="button"
-                className="flex items-center justify-between gap-1 px-5 py-1 text-sm font-medium text-center text-green-800 border border-green-800 rounded-lg hover:text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800"
+              <td className="w-4 p-4">
+                <div className="flex items-center">
+                  <input
+                    id="checkbox-{{ .id }}"
+                    aria-describedby="checkbox-1"
+                    type="checkbox"
+                    className="w-4 h-4 border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:focus:ring-primary-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                  <label htmlFor="checkbox-{{ .id }}" className="sr-only">
+                    checkbox
+                  </label>
+                </div>
+              </td>
+              <th
+                scope="row"
+                className="px-6 py-3 font-semibold text-gray-800 whitespace-nowrap dark:text-gray-400"
               >
-                <BiEdit />
-                Sửa
-              </button>
-              <button
-                type="button"
-                className="flex items-center justify-between gap-1 px-5 py-1 text-sm font-medium text-center text-red-700 border border-red-700 rounded-lg hover:text-white hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900"
+                {index + 1}
+              </th>
+              <th
+                scope="row"
+                className="px-6 py-3 font-semibold text-gray-800 whitespace-nowrap dark:text-gray-400"
               >
-                <BiTrash />
-                Xoá
-              </button>
-            </td>
-          </tr>
+                {item.name}
+              </th>
+              <td className="px-6 py-3">{formatNumber(item.price)}</td>
+              <td className="px-6 py-3">{item.promoPercent}%</td>
+              <td className="px-6 py-3">500</td>
+              <td className="px-6 py-3">{formatDate(item.createdTime)}</td>
+              <td className="flex items-center justify-around gap-4 px-6 py-3">
+                <button
+                  type="button"
+                  className="flex items-center justify-between gap-1 px-5 py-1 text-sm font-medium text-center text-green-800 border border-green-800 rounded-lg hover:text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800"
+                >
+                  <BiEdit />
+                  Sửa
+                </button>
+                <button
+                  type="button"
+                  className="flex items-center justify-between gap-1 px-5 py-1 text-sm font-medium text-center text-red-700 border border-red-700 rounded-lg hover:text-white hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900"
+                >
+                  <BiTrash />
+                  Xoá
+                </button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
       <nav
