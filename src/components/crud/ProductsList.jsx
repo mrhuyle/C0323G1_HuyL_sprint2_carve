@@ -41,7 +41,7 @@ const ProductsList = () => {
   }, []);
 
   return (
-    <div className="relative w-full mr-8 -translate-x-1/2 shadow-md sm:rounded-lg left-1/2">
+    <section className="relative w-full p-5 shadow-md sm:rounded-lg">
       <h1 className="text-center capitalize">BỘ THẺ</h1>
       <hr className="my-4 h-0.5 border-t-0 bg-neutral-200 opacity-100" />
       <div className="flex items-center justify-between pb-2 mx-4">
@@ -58,7 +58,7 @@ const ProductsList = () => {
             </div>
           </form>
         </div>
-        <Link to="/dashboard/add_contract">
+        <Link to="/admin/dashboard/create-product">
           <button className="flex items-center justify-between gap-1 px-5 py-1 text-sm font-medium text-blue-700 bg-transparent border border-blue-500 rounded-lg hover:bg-blue-500 hover:text-white hover:border-transparent">
             <BiMessageAltAdd />
             Thêm
@@ -101,7 +101,7 @@ const ProductsList = () => {
               Ngày tạo
             </th>
             <th scope="col" className="px-6 py-3 text-center">
-              Actions
+              Thao tác
             </th>
           </tr>
         </thead>
@@ -161,7 +161,7 @@ const ProductsList = () => {
         </tbody>
       </table>
       <nav
-        className="absolute flex items-center justify-between w-full pb-2 bottom-1"
+        className="absolute flex items-center justify-between w-full px-10 pb-2 bottom-1"
         aria-label="Table navigation"
       >
         <span className="flex gap-2 ml-6 text-sm font-normal text-gray-900 dark:text-gray-900">
@@ -186,7 +186,7 @@ const ProductsList = () => {
           </li>
         </ul>
       </nav>
-    </div>
+    </section>
   );
 };
 

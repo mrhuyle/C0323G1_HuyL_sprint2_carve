@@ -7,7 +7,6 @@ import ProductsSlider from "./ProductsSlider";
 import Roadmap from "./Roadmap";
 import Blogs from "./Blogs";
 import * as deckServices from "../services/deckServices";
-import useAuth from "../hooks/useAuth";
 
 const Home = () => {
   const [latestDecks, setLatestDecks] = useState([]);
@@ -16,6 +15,7 @@ const Home = () => {
     try {
       const response = await deckServices.getLatestDecks();
       setLatestDecks(response.data);
+      console.log(response.data);
     } catch (err) {
       console.log(err);
     }

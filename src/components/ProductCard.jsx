@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Card } from "flowbite-react";
-import { Link } from "react-router-dom";
+import Tag from "../components/crud/Tag";
+import { useNavigate, useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import * as cartServices from "../services/cartServices";
 import Swal from "sweetalert2";
@@ -20,11 +21,16 @@ const cardStyle = {
   height: "140px",
 };
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, tagName }) => {
   const { cart, setCart } = useCartContext();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const { auth } = useAuth();
   const [cartId, setCartId] = useState("");
+  const [tags, setTags] = useState(JSON.parse(tagName));
+
+  console.log(tags);
 
   const getCartIdByUsername = async () => {
     try {
@@ -49,46 +55,76 @@ const ProductCard = ({ product }) => {
   const priceFormatted = formatNumber(product.price);
 
   const handleBuyProduct = async () => {
-    try {
-      const data = {
-        cartId: cartId,
-        deckId: product.id,
-      };
-      const response = await cartServices.addCartItem(auth?.accessToken, data);
-      console.log(response);
-      if (response.status == 200) {
-        Swal.fire({
-          title: "Đã thêm vào giỏ hàng",
-          text: product.name,
-          icon: "success",
-          timer: 1500,
-        });
-        setCart([...cart, product]);
-      }
-    } catch (err) {
-      console.log(err);
-      if (err?.response.status == 409) {
-        Swal.fire({
-          title: "Sản phẩm đã có trong giỏ hàng",
-          text: product.name,
-          showCloseButton: "true",
-          icon: "warning",
-        });
-      } else {
-        Swal.fire({
-          title: "Lỗi kết nối trong lúc mua hàng",
-          text: product.name,
-          icon: "warning",
-          timer: 1500,
-        });
+    if (!auth?.accessToken) {
+      Swal.fire({
+        title: "Vui lòng đăng nhập",
+        text: "Bạn phải đăng nhập để thêm sản phẩm vào giỏ hàng",
+        icon: "question",
+        showCloseButton: true,
+        confirmButtonText: "Đăng nhập",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/login", { state: { from: location } });
+        }
+      });
+    } else {
+      try {
+        const data = {
+          cartId: cartId,
+          deckId: product.id,
+        };
+        const response = await cartServices.addCartItem(
+          auth?.accessToken,
+          data
+        );
+        console.log(response);
+        if (response.status == 200) {
+          Swal.fire({
+            title: "Đã thêm vào giỏ hàng",
+            text: product.name,
+            icon: "success",
+            timer: 1500,
+          });
+          setCart([...cart, product]);
+        }
+      } catch (err) {
+        console.log(err);
+        if (err?.response.status == 409) {
+          Swal.fire({
+            title: "Sản phẩm đã có trong giỏ hàng",
+            text: product.name,
+            showCloseButton: "true",
+            icon: "warning",
+          });
+        } else {
+          Swal.fire({
+            title: "Lỗi kết nối trong lúc mua hàng",
+            text: product.name,
+            icon: "warning",
+            timer: 1500,
+          });
+        }
       }
     }
   };
   return (
     <div className="hover:scale-95 hover:transition-transform">
       <Card imgAlt="product">
-        <img src={product.img} alt="product" style={cardStyle} />
-        <Link to="/product_detail">
+        <img
+          src={product.img}
+          alt="product"
+          style={cardStyle}
+          onClick={() => {
+            navigate(`/product-detail/${product.id}`);
+          }}
+          className="cursor-pointer"
+        />
+        <div
+          onClick={() => {
+            navigate(`/product-detail/${product.id}`);
+          }}
+          className="cursor-pointer"
+        >
           <h5 className="text-xl font-semibold tracking-tight text-gray-900">
             <div className="flex items-center justify-between mb-2">
               <span className="rounded bg-indigo-300 p-2 py-0.5 text-base font-semibold text-cyan-800 dark:bg-cyan-200">
@@ -100,14 +136,19 @@ const ProductCard = ({ product }) => {
             </div>
             <p className="h-20 text-justify">{product.name}</p>
           </h5>
-        </Link>
+          <div className="flex">
+            {tags.map((tag, index) => (
+              <Tag key={index} name={tag} showX={false} />
+            ))}
+          </div>
+        </div>
         <div className="mb-5 mt-2.5 flex items-center"></div>
         <div className="flex items-center justify-between">
           <div className="flex flex-col items-center">
-            <span className="text-base font-bold text-gray-900 dark:text-white">
+            <span className="text-base font-bold text-gray-900 ">
               {actualPriceFormatted}
             </span>
-            <span className="text-base font-bold text-gray-400 line-through dark:text-white">
+            <span className="text-base font-bold text-gray-400 line-through ">
               {priceFormatted}
             </span>
           </div>

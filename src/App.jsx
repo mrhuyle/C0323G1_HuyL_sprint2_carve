@@ -14,6 +14,7 @@ import ProductsList from "./components/crud/ProductsList";
 import UserSetting from "./components/crud/UserSetting";
 import Invoice from "./components/Invoice";
 import ConfirmOrder from "./components/ConfirmOrder";
+import CreateProduct from "./components/crud/CreateProduct";
 
 function App() {
   return (
@@ -28,6 +29,10 @@ function App() {
                 path="/admin/dashboard/product"
                 element={<ProductsList />}
               />
+              <Route
+                path="/admin/dashboard/create-product"
+                element={<CreateProduct />}
+              />
             </Route>
           </Route>
           <Route element={<RequireAuth allowedRoles={["ROLE_USER"]} />}>
@@ -38,7 +43,7 @@ function App() {
             <Route path="/confirm-order/:id" element={<ConfirmOrder />} />
           </Route>
           <Route path="/" element={<Home />}></Route>
-          <Route path="/product_detail" element={<ProductDetail />} />
+          <Route path="/product-detail/:id" element={<ProductDetail />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route
             element={<RequireAuth allowedRoles={["ROLE_ADMIN", "ROLE_USER"]} />}

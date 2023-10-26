@@ -14,3 +14,35 @@ export const getLatestDecks = async () => {
   console.log(response.data);
   return response;
 };
+
+export const getDeckDetail = async (id) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
+  };
+  const response = await axios.get(
+    `${baseUrl}/get-detail?id=${id}`,
+    null,
+    config
+  );
+  console.log(response);
+  return response;
+};
+
+export const getTagsByDeckId = async (id) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
+  };
+  const response = await axios.get(
+    `${baseUrl}/get-tags?id=${id}`,
+    null,
+    config
+  );
+  console.log(response);
+  return response;
+};

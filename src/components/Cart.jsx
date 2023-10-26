@@ -62,6 +62,10 @@ const Cart = () => {
     updateSum(checkItems);
   }, [checkItems]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleCheckboxChange = (e, item) => {
     const isChecked = e.target.checked;
 
