@@ -4,14 +4,22 @@ import UploadWidget from "../UploadWidget";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { BiMessageAltAdd } from "react-icons/bi";
-import { AiOutlineInfoCircle, AiOutlinePlusSquare } from "react-icons/ai";
+import { AiOutlinePlusSquare } from "react-icons/ai";
+import * as deckServices from "../../services/deckServices";
+import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 
 const CreateProduct = () => {
+  const { auth } = useAuth();
   const defaultImg = "/src/assets/img/product_sample.png";
-  const [tags, setTags] = useState([]);
+  const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [uploadedImageUrl, setUploadedImageUrl] = useState("");
+  const [price, setPrice] = useState("");
+  const [promoPercent, setPromoPercent] = useState("");
+  const [uploadedImageUrl, setUploadedImageUrl] = useState(defaultImg);
+  const [tags, setTags] = useState([]);
+
+  console.log(description);
   const handleImageUpload = async (secureUrl) => {
     setUploadedImageUrl(secureUrl);
   };
@@ -29,6 +37,27 @@ const CreateProduct = () => {
   const handleBtnXClick = (tagName) => {
     console.log(tagName);
     setTags(tags.filter((item) => item !== tagName));
+  };
+
+  const handleCreateDeck = async () => {
+    const data = {
+      name: name,
+      description: description,
+      price: price,
+      promoPercent: promoPercent,
+      img: uploadedImageUrl,
+      tagName: tags,
+    };
+    try {
+      const response = await deckServices.createDeck(auth?.accessToken, data);
+      if (response?.status == 201) {
+        Swal.fire("Đã tạo sản phẩm thành công", "", "success");
+      }
+    } catch (err) {
+      if (err?.response.status == 409) {
+        Swal.fire("Đã có lỗi trong quá trình tạo bộ thẻ", "", "error");
+      }
+    }
   };
 
   return (
@@ -72,6 +101,9 @@ const CreateProduct = () => {
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   placeholder="Tên bộ thẻ"
                   required
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
                 />
               </div>
               <div className="w-full">
@@ -88,6 +120,9 @@ const CreateProduct = () => {
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   placeholder="đ"
                   required
+                  onChange={(e) => {
+                    setPrice(e.target.value);
+                  }}
                 />
               </div>
               <div className="w-full">
@@ -104,6 +139,9 @@ const CreateProduct = () => {
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   placeholder="10%"
                   required
+                  onChange={(e) => {
+                    setPromoPercent(e.target.value);
+                  }}
                 />
               </div>
 
@@ -151,19 +189,24 @@ const CreateProduct = () => {
                 >
                   Mô tả
                 </label>
-                <ReactQuill
-                  theme="snow"
-                  value={description}
-                  onChange={setDescription}
-                  className="h-[100px]"
-                />
+                <div className="bg-gray-100">
+                  <ReactQuill
+                    theme="snow"
+                    value={description}
+                    onChange={setDescription}
+                    className="h-[100px]"
+                  />
+                </div>
               </div>
             </div>
+            <button
+              onClick={handleCreateDeck}
+              className="flex items-center justify-between gap-1 px-5 py-1 mt-20 text-sm font-medium text-blue-700 bg-transparent border border-blue-500 rounded-lg hover:bg-blue-500 hover:text-white hover:border-transparent"
+            >
+              <BiMessageAltAdd />
+              Thêm
+            </button>
           </form>
-          <button className="flex items-center justify-between gap-1 px-5 py-1 mt-20 text-sm font-medium text-blue-700 bg-transparent border border-blue-500 rounded-lg hover:bg-blue-500 hover:text-white hover:border-transparent">
-            <BiMessageAltAdd />
-            Thêm
-          </button>
         </div>
       </div>
     </section>

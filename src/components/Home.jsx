@@ -7,8 +7,10 @@ import ProductsSlider from "./ProductsSlider";
 import Roadmap from "./Roadmap";
 import Blogs from "./Blogs";
 import * as deckServices from "../services/deckServices";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
   const [latestDecks, setLatestDecks] = useState([]);
 
   const getLatestDecks = async () => {
@@ -21,13 +23,22 @@ const Home = () => {
     }
   };
 
+  const handleSearch = (searchInput) => {
+    let result = searchInput.trim();
+    if (result === "") {
+      navigate(`/search/ `);
+    } else {
+      navigate(`/search/${result}`);
+    }
+  };
+
   useEffect(() => {
     getLatestDecks();
   }, []);
 
   return (
     <>
-      <Navbar />
+      <Navbar onSearch={handleSearch} />
       <WelcomeBanner />
       <ProductsSlider
         decks={latestDecks}

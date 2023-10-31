@@ -3,12 +3,14 @@ import logo from "../assets/img/carve_logo_indigo.png";
 import * as Scroll from "react-scroll";
 import { FaXmark, FaBars } from "react-icons/fa6";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { BsSearch } from "react-icons/bs";
 import Dropdown from "./Dropdown";
 import useAuth from "../hooks/useAuth";
 import * as cartServices from "../services/cartServices";
 import useCartContext from "../hooks/useCartContext";
+import SearchForm from "./SearchForm";
 
-const Navbar = () => {
+const Navbar = ({ onSearch }) => {
   const { cart, setCart } = useCartContext();
 
   const LinkScroll = Scroll.Link;
@@ -36,6 +38,10 @@ const Navbar = () => {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const handleSearch = (keyword) => {
+    onSearch(keyword);
   };
 
   useEffect(() => {
@@ -95,7 +101,7 @@ const Navbar = () => {
             </Link>
 
             {/* nav-items for large devices*/}
-            <ul className="hidden space-x-12 md:flex">
+            <ul className="hidden space-x-8 md:flex">
               {navItems.map((item, index) => (
                 <LinkScroll
                   key={index}
@@ -109,6 +115,8 @@ const Navbar = () => {
                 </LinkScroll>
               ))}
             </ul>
+
+            <SearchForm onSearch={handleSearch} />
 
             {/* btn for large devices */}
             <div className="items-center hidden space-x-8 lg:flex">

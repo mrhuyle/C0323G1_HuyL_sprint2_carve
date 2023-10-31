@@ -47,3 +47,7 @@ button[disabled] {
   color: #a0a0a0;
   cursor: not-allowed;
 }
+
+#description_deck ul {
+  list-style-type: disc;
+}

@@ -82,6 +82,7 @@ const ProductsSlider = ({ decks, title, next, prev }) => {
             delay: 3000,
             disableOnInteraction: false,
           }}
+          loop={true}
           className="mySwiper"
         >
           {decks?.map((deck, index) => (

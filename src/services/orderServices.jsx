@@ -25,3 +25,16 @@ export const saveInvoice = async (accessToken, data) => {
   const response = await axios.post(`${baseUrl}/save-invoice`, data, config);
   return response;
 };
+
+export const getOrders = async (accessToken) => {
+  console.log(accessToken);
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+    withCredentials: true,
+  };
+  const response = await axios.get(`${baseUrl}/get-orders`, config);
+  return response;
+};

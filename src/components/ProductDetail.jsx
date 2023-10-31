@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import * as deckServices from "../services/deckServices";
 import * as cartServices from "../services/cartServices";
+import parse from "html-react-parser";
 
 const formatNumber = (number) => {
   const formattedNumber = number || 0;
@@ -106,6 +107,15 @@ const ProductDetail = () => {
     }
   };
 
+  const handleSearch = (searchInput) => {
+    let result = searchInput.trim().replace(/" "/g, "");
+    if (result === "") {
+      navigate(`/search/ `);
+    } else {
+      navigate(`/search/${result}`);
+    }
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -122,7 +132,7 @@ const ProductDetail = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar onSearch={handleSearch} />
       <section className="mt-5 text-gray-700 bg-gray-100 overflow-hidivide-none body-font">
         <div className="container px-5 py-24 mx-auto">
           <div className="flex flex-wrap mx-auto lg:w-4/5">
@@ -148,7 +158,9 @@ const ProductDetail = () => {
                 <BsCardList size={28} />
               </div>
               <div className="my-2">
-                <p className="leading-relaxed">{deck.description}</p>
+                <p id="description_deck" className="leading-relaxed">
+                  {parse(`${deck.description}`)}
+                </p>
               </div>
               <div className="flex gap-1">
                 {tags?.map((tag, index) => (

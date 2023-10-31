@@ -3,6 +3,7 @@ import { HiMenuAlt3 } from "react-icons/hi";
 import { TbReportAnalytics } from "react-icons/tb";
 import { AiOutlineUser, AiOutlineHome } from "react-icons/ai";
 import { BsCardList } from "react-icons/bs";
+import { BiFileFind } from "react-icons/bi";
 import { Link, Outlet } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
@@ -15,7 +16,7 @@ const DashboardAdmin = () => {
       icon: TbReportAnalytics,
     },
     { name: "Bộ thẻ", link: "/admin/dashboard/product", icon: BsCardList },
-    { name: "Customers", link: "/dashboard/customers", icon: AiOutlineUser },
+    { name: "Đơn hàng", link: "/admin/dashboard/orders", icon: BiFileFind },
   ];
   const [open, setOpen] = useState(true);
   return (

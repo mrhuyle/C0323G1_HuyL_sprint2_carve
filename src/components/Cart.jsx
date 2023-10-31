@@ -203,9 +203,18 @@ const Cart = () => {
     }
   };
 
+  const handleSearch = (searchInput) => {
+    let result = searchInput.trim().replace(/" "/g, "");
+    if (result === "") {
+      navigate(`/search/ `);
+    } else {
+      navigate(`/search/${result}`);
+    }
+  };
+
   return (
     <>
-      <Navbar />
+      <Navbar onSearch={handleSearch} />
 
       {/* cart */}
       <div className="pt-20 pb-20 bg-gray-100">

@@ -15,6 +15,8 @@ import UserSetting from "./components/crud/UserSetting";
 import Invoice from "./components/Invoice";
 import ConfirmOrder from "./components/ConfirmOrder";
 import CreateProduct from "./components/crud/CreateProduct";
+import AdminOrdersList from "./components/crud/AdminOrdersList";
+import SearchPage from "./components/SearchPage";
 
 function App() {
   return (
@@ -22,7 +24,10 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/search/:keyword" element={<SearchPage />} />
         <Route element={<PersistLogin />}>
+          <Route path="/search/:keyword" element={<SearchPage />} />
+          <Route path="/search/" element={<SearchPage />} />
           <Route element={<RequireAuth allowedRoles={["ROLE_ADMIN"]} />}>
             <Route path="/admin/dashboard" element={<DashboardAdmin />}>
               <Route
@@ -32,6 +37,10 @@ function App() {
               <Route
                 path="/admin/dashboard/create-product"
                 element={<CreateProduct />}
+              />
+              <Route
+                path="/admin/dashboard/orders"
+                element={<AdminOrdersList />}
               />
             </Route>
           </Route>
