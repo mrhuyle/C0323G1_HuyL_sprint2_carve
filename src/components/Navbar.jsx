@@ -10,7 +10,7 @@ import * as cartServices from "../services/cartServices";
 import useCartContext from "../hooks/useCartContext";
 import SearchForm from "./SearchForm";
 
-const Navbar = ({ onSearch }) => {
+const Navbar = ({ onSearch, inputSearch }) => {
   const { cart, setCart } = useCartContext();
 
   const LinkScroll = Scroll.Link;
@@ -116,7 +116,7 @@ const Navbar = ({ onSearch }) => {
               ))}
             </ul>
 
-            <SearchForm onSearch={handleSearch} />
+            <SearchForm onSearch={handleSearch} input={inputSearch} />
 
             {/* btn for large devices */}
             <div className="items-center hidden space-x-8 lg:flex">

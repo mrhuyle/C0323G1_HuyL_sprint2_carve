@@ -10,7 +10,7 @@ import HavingNoResults from "../components/HavingNoResults";
 const SearchPage = () => {
   const params = useParams();
   const [decks, setDecks] = useState([]);
-  const [keyword, setKeyword] = useState(params.keyword);
+  const [keyword, setKeyword] = useState(params.keyword || "");
   const [sortBy, setSortBy] = useState("createdTime");
   const [sortDirection, setSortDirection] = useState("desc");
   const [currentPage, setCurrentPage] = useState(1);
@@ -73,7 +73,7 @@ const SearchPage = () => {
 
   return (
     <>
-      <Navbar onSearch={handleSearch} />
+      <Navbar onSearch={handleSearch} inputSearch={keyword} />
       {!isNoContent ? (
         <div className="relative px-4 py-10 mx-auto bg-gray-100 md:px-14 max-w-screen-2xl">
           <div className="pt-3 pb-2 mx-auto mt-10 mb-5 italic font-extrabold leading-relaxed text-center bg-indigo-100 rounded-2xl md:w-1/2">
@@ -121,7 +121,17 @@ const SearchPage = () => {
           </div>
         </div>
       ) : (
-        <HavingNoResults />
+        <div className="relative px-4 py-10 mx-auto bg-gray-100 md:px-14 max-w-screen-2xl">
+          <div className="pt-3 pb-2 mx-auto mt-10 mb-5 italic font-extrabold leading-relaxed text-center bg-indigo-100 rounded-2xl md:w-1/2">
+            <h2 className="mb-3 text-4xl font-semibold text-brandPrimary head-title">
+              KẾT QUẢ TÌM KIẾM
+            </h2>
+          </div>
+          <div className="flex items-center justify-center">
+            <HavingNoResults />
+          </div>
+          x
+        </div>
       )}
 
       <MyFooter />

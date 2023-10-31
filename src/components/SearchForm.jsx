@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { BsSearch } from "react-icons/bs";
 
-const SearchForm = ({ onSearch }) => {
-  const [searchInput, setSearchInput] = useState("");
+const SearchForm = ({ onSearch, input }) => {
+  const [searchInput, setSearchInput] = useState(input);
 
   const handleSearch = () => {
     onSearch(searchInput);
