@@ -83,3 +83,32 @@ export const createDeck = async (accessToken, data) => {
   console.log(response);
   return response;
 };
+
+export const getDeckById = async (accessToken, id) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+    withCredentials: true,
+  };
+  const response = await axios.get(`${deckUrl}/get-deck?id=${id}`, config);
+  return response;
+};
+
+export const editDeck = async (accessToken, data, id) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+    withCredentials: true,
+  };
+  const response = await axios.put(
+    `${deckUrl}/edit-deck?id=${id}`,
+    data,
+    config
+  );
+  console.log(response);
+  return response;
+};

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import { BiMessageAltAdd, BiEdit, BiTrash } from "react-icons/bi";
 import { AiOutlineLeftCircle, AiOutlineRightCircle } from "react-icons/ai";
@@ -24,6 +24,8 @@ const formatDate = (inputDateString) => {
 };
 
 const ProductsList = () => {
+  const navigate = useNavigate();
+
   const [latestDecks, setLatestDecks] = useState([]);
 
   const getLatestDecks = async () => {
@@ -142,12 +144,16 @@ const ProductsList = () => {
               <td className="px-6 py-3">{formatDate(item.createdTime)}</td>
               <td className="flex items-center justify-around gap-4 px-6 py-3">
                 <button
+                  onClick={() => {
+                    navigate(`/admin/dashboard/edit-product/${item.id}`);
+                  }}
                   type="button"
                   className="flex items-center justify-between gap-1 px-5 py-1 text-sm font-medium text-center text-green-800 border border-green-800 rounded-lg hover:text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800"
                 >
                   <BiEdit />
                   Sửa
                 </button>
+
                 <button
                   type="button"
                   className="flex items-center justify-between gap-1 px-5 py-1 text-sm font-medium text-center text-red-700 border border-red-700 rounded-lg hover:text-white hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900"

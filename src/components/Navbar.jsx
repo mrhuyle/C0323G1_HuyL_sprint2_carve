@@ -3,7 +3,6 @@ import logo from "../assets/img/carve_logo_indigo.png";
 import * as Scroll from "react-scroll";
 import { FaXmark, FaBars } from "react-icons/fa6";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { BsSearch } from "react-icons/bs";
 import Dropdown from "./Dropdown";
 import useAuth from "../hooks/useAuth";
 import * as cartServices from "../services/cartServices";
@@ -121,7 +120,7 @@ const Navbar = ({ onSearch, inputSearch }) => {
             {/* btn for large devices */}
             <div className="items-center hidden space-x-8 lg:flex">
               {/* cart */}
-              {auth?.username && (
+              {auth?.username !== "admin" && (
                 <div className="relative cursor-pointer">
                   <div className="absolute t-0 left-3">
                     <p className="flex items-center justify-center w-1 h-1 p-2 text-xs text-white bg-red-500 rounded-full">

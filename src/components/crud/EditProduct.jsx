@@ -3,23 +3,42 @@ import Tag from "./Tag";
 import UploadWidget from "../UploadWidget";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { BiMessageAltAdd, BiArrowBack } from "react-icons/bi";
+import { BiEditAlt, BiArrowBack } from "react-icons/bi";
 import { AiOutlinePlusSquare } from "react-icons/ai";
 import * as deckServices from "../../services/deckServices";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-const CreateProduct = () => {
+const EditProduct = () => {
   const { auth } = useAuth();
+  const { id } = useParams();
   const navigate = useNavigate();
   const defaultImg = "/src/assets/img/product_sample.png";
+  const [deck, setDeck] = useState({});
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [promoPercent, setPromoPercent] = useState("");
   const [uploadedImageUrl, setUploadedImageUrl] = useState(defaultImg);
   const [tags, setTags] = useState([]);
+
+  const getDeckById = async () => {
+    try {
+      const response = await deckServices.getDeckById(auth?.accessToken, id);
+      console.log(response.data);
+      const recentDeck = response.data;
+      setDeck(recentDeck);
+      setName(recentDeck.name);
+      setDescription(recentDeck.description);
+      setPrice(recentDeck.price);
+      setPromoPercent(recentDeck.promoPercent);
+      setTags(JSON.parse(recentDeck.tagName));
+      setUploadedImageUrl(recentDeck.img);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const handleImageUpload = async (secureUrl) => {
     setUploadedImageUrl(secureUrl);
@@ -40,7 +59,7 @@ const CreateProduct = () => {
     setTags(tags.filter((item) => item !== tagName));
   };
 
-  const handleCreateDeck = async () => {
+  const handleEditDeck = async () => {
     const data = {
       name: name,
       description: description,
@@ -50,20 +69,24 @@ const CreateProduct = () => {
       tagName: tags,
     };
     try {
-      const response = await deckServices.createDeck(auth?.accessToken, data);
-      if (response?.status == 201) {
-        Swal.fire("Đã tạo sản phẩm thành công", "", "success");
+      const response = await deckServices.editDeck(auth?.accessToken, data, id);
+      if (response?.status == 200) {
+        Swal.fire("Đã sửa thông tin thành công", "", "success");
       }
     } catch (err) {
       if (err?.response.status == 409) {
-        Swal.fire("Đã có lỗi trong quá trình tạo bộ thẻ", "", "error");
+        Swal.fire("Đã có lỗi trong quá trình sửa thông tin", "", "error");
       }
     }
   };
 
+  useEffect(() => {
+    getDeckById();
+  }, []);
+
   return (
     <section className="relative w-full p-5 shadow-md sm:rounded-lg">
-      <h1 className="text-center capitalize">THÊM BỘ THẺ</h1>
+      <h1 className="text-center capitalize">SỬA BỘ THẺ</h1>
       <hr className="my-4 h-0.5 border-t-0 bg-neutral-200 opacity-100" />
       <div className="flex">
         <div className="w-1/2 px-6">
@@ -99,6 +122,7 @@ const CreateProduct = () => {
                   type="text"
                   name="name"
                   id="name"
+                  value={name}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   placeholder="Tên bộ thẻ"
                   required
@@ -118,6 +142,7 @@ const CreateProduct = () => {
                   type="number"
                   name="price"
                   id="price"
+                  value={price}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   placeholder="đ"
                   required
@@ -137,6 +162,7 @@ const CreateProduct = () => {
                   type="number"
                   name="promotion"
                   id="promotion"
+                  value={promoPercent}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   placeholder="10%"
                   required
@@ -201,11 +227,11 @@ const CreateProduct = () => {
             </div>
             <div className="flex gap-2">
               <button
-                onClick={handleCreateDeck}
+                onClick={handleEditDeck}
                 className="flex items-center justify-between gap-1 px-5 py-1 mt-20 text-sm font-medium text-blue-700 bg-transparent border border-blue-500 rounded-lg hover:bg-blue-500 hover:text-white hover:border-transparent"
               >
-                <BiMessageAltAdd />
-                Thêm
+                <BiEditAlt />
+                Sửa
               </button>
               <button
                 onClick={() => {
@@ -224,4 +250,4 @@ const CreateProduct = () => {
   );
 };
 
-export default CreateProduct;
+export default EditProduct;

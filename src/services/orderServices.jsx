@@ -27,7 +27,6 @@ export const saveInvoice = async (accessToken, data) => {
 };
 
 export const getOrders = async (accessToken) => {
-  console.log(accessToken);
   const config = {
     headers: {
       "Content-Type": "application/json",

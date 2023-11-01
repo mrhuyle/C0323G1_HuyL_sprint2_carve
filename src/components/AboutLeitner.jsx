@@ -17,7 +17,7 @@ const AboutLeitner = () => {
               50% kiến thức một cách nhanh chóng
             </p>
             <a
-              href="#"
+              href="https://en.wikipedia.org/wiki/Leitner_system"
               className="inline-block px-4 py-2 space-y-2 font-bold text-blue-800 bg-indigo-300 rounded hover:text-white hover:bg-blue-700"
             >
               Tìm hiểu thêm

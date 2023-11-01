@@ -17,6 +17,7 @@ import ConfirmOrder from "./components/ConfirmOrder";
 import CreateProduct from "./components/crud/CreateProduct";
 import AdminOrdersList from "./components/crud/AdminOrdersList";
 import SearchPage from "./components/SearchPage";
+import EditProduct from "./components/crud/EditProduct";
 
 function App() {
   return (
@@ -37,6 +38,10 @@ function App() {
               <Route
                 path="/admin/dashboard/create-product"
                 element={<CreateProduct />}
+              />
+              <Route
+                path="/admin/dashboard/edit-product/:id"
+                element={<EditProduct />}
               />
               <Route
                 path="/admin/dashboard/orders"
