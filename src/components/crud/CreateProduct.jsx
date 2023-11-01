@@ -172,14 +172,16 @@ const CreateProduct = () => {
               </div>
               <div className="flex items-center justify-start w-full col-span-2 gap-1">
                 <div className="flex flex-wrap">
-                  {tags?.map((tag, index) => (
-                    <Tag
-                      key={index}
-                      name={tag}
-                      onBtnXClick={handleBtnXClick}
-                      showX={true}
-                    />
-                  ))}
+                  {tags
+                    ? tags?.map((tag, index) => (
+                        <Tag
+                          key={index}
+                          name={tag}
+                          onBtnXClick={handleBtnXClick}
+                          showX={true}
+                        />
+                      ))
+                    : null}
                 </div>
               </div>
               <div className="sm:col-span-2">

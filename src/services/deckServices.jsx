@@ -11,7 +11,7 @@ export const getLatestDecks = async () => {
     withCredentials: true,
   };
 
-  const response = await axios.get(`${baseUrl}/get-latest-decks`, null, config);
+  const response = await axios.get(`${baseUrl}/get-latest-decks`, config);
   console.log(response.data);
   return response;
 };

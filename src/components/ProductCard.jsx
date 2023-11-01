@@ -136,11 +136,17 @@ const ProductCard = ({ product, tagName }) => {
             </div>
             <p className="h-20 text-justify">{product.name}</p>
           </h5>
-          <div className="flex">
-            {tags.map((tag, index) => (
-              <Tag key={index} name={tag} showX={false} />
-            ))}
-          </div>
+          {product.tagName != "[null]" ? (
+            <div className="flex">
+              {tags.map((tag, index) => (
+                <Tag key={index} name={tag} showX={false} />
+              ))}
+            </div>
+          ) : (
+            <div>
+              <span>&nbsp;</span>
+            </div>
+          )}
         </div>
         <div className="mb-5 mt-2.5 flex items-center"></div>
         <div className="flex items-center justify-between">

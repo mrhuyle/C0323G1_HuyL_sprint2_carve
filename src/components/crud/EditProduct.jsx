@@ -33,7 +33,9 @@ const EditProduct = () => {
       setDescription(recentDeck.description);
       setPrice(recentDeck.price);
       setPromoPercent(recentDeck.promoPercent);
-      setTags(JSON.parse(recentDeck.tagName));
+      recentDeck.tagName != "[null]"
+        ? setTags(JSON.parse(recentDeck.tagName))
+        : setTags([]);
       setUploadedImageUrl(recentDeck.img);
     } catch (err) {
       console.log(err);
