@@ -18,6 +18,7 @@ import CreateProduct from "./components/crud/CreateProduct";
 import AdminOrdersList from "./components/crud/AdminOrdersList";
 import SearchPage from "./components/SearchPage";
 import EditProduct from "./components/crud/EditProduct";
+import ErrorPayment from "./components/ErrorPayment";
 
 function App() {
   return (
@@ -55,6 +56,7 @@ function App() {
             </Route>
             <Route path="/cart" element={<Cart />} />
             <Route path="/confirm-order/:id" element={<ConfirmOrder />} />
+            <Route path="/error-payment" element={<ErrorPayment />} />
           </Route>
           <Route path="/" element={<Home />}></Route>
           <Route path="/product-detail/:id" element={<ProductDetail />} />

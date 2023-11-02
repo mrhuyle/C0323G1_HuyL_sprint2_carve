@@ -7,7 +7,7 @@ import useAuth from "../hooks/useAuth";
 import * as cartServices from "../services/cartServices";
 import useCartContext from "../hooks/useCartContext";
 import Swal from "sweetalert2";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import * as htmlToImage from "html-to-image";
 import * as cloudinaryServices from "../services/cloudinaryServices";
 import * as orderServices from "../services/orderServices";
@@ -36,6 +36,7 @@ const formatDate = (inputDateString) => {
 const Invoice = () => {
   const { auth } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
   const { cart, setCart } = useCartContext([]);
   const [orderItems, setOrderItems] = useState([]);
@@ -47,6 +48,8 @@ const Invoice = () => {
   const [hadRender, setHadRender] = useState(false);
   const [loading, setLoading] = useState(false);
   const orderId = queryParams.get("orderId");
+  const responseCode = queryParams.get("vnp_ResponseCode");
+  console.log(responseCode);
 
   const uploadImgToCloudinary = async (file, fileName) => {
     const response = await cloudinaryServices.uploadImg(file, fileName);
@@ -165,6 +168,14 @@ const Invoice = () => {
 
   useEffect(() => {
     setLoading(true);
+
+    // Check if a error existed, navigate to another page and prevent render invoice
+
+    if (responseCode !== "00") {
+      navigate("/error-payment");
+      return;
+    }
+
     setTimeout(() => {
       convertHtmlToImage();
       setLoading(false);
