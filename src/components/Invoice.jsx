@@ -49,7 +49,6 @@ const Invoice = () => {
   const [loading, setLoading] = useState(false);
   const orderId = queryParams.get("orderId");
   const responseCode = queryParams.get("vnp_ResponseCode");
-  console.log(responseCode);
 
   const uploadImgToCloudinary = async (file, fileName) => {
     const response = await cloudinaryServices.uploadImg(file, fileName);
@@ -101,8 +100,6 @@ const Invoice = () => {
   };
 
   const getOrderItems = async (orderId) => {
-    console.log(auth?.accessToken);
-    console.log(orderId);
     try {
       const response = await cartServices.getCartItemsByOrder(
         auth?.accessToken,
@@ -123,6 +120,20 @@ const Invoice = () => {
           timer: 2000,
         });
       }
+    }
+  };
+
+  const setOrderToHadBought = async (id) => {
+    console.log(id);
+    console.log(auth?.accessToken);
+    try {
+      const response = await orderServices.setOrderToHadBought(
+        auth?.accessToken,
+        id
+      );
+      console.log(response.status);
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -161,6 +172,12 @@ const Invoice = () => {
   };
 
   useEffect(() => {
+    // Check if a error existed, navigate to another page and prevent render invoice
+
+    if (responseCode !== "00") {
+      navigate("/error-payment");
+      return;
+    }
     getCartItems();
     getOrderItems(orderId);
     setHadRender(true);
@@ -168,14 +185,7 @@ const Invoice = () => {
 
   useEffect(() => {
     setLoading(true);
-
-    // Check if a error existed, navigate to another page and prevent render invoice
-
-    if (responseCode !== "00") {
-      navigate("/error-payment");
-      return;
-    }
-
+    setOrderToHadBought(orderId);
     setTimeout(() => {
       convertHtmlToImage();
       setLoading(false);

@@ -37,3 +37,19 @@ export const getOrders = async (accessToken) => {
   const response = await axios.get(`${baseUrl}/get-orders`, config);
   return response;
 };
+
+export const setOrderToHadBought = async (accessToken, id) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+    withCredentials: true,
+  };
+  const response = await axios.post(
+    `${baseUrl}/set-had-bought?id=${id}`,
+    null,
+    config
+  );
+  return response;
+};

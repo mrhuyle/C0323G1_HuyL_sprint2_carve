@@ -120,7 +120,7 @@ const Navbar = ({ onSearch, inputSearch }) => {
             {/* btn for large devices */}
             <div className="items-center hidden space-x-8 lg:flex">
               {/* cart */}
-              {auth?.username !== "admin" && (
+              {auth?.username && (
                 <div className="relative cursor-pointer">
                   <div className="absolute t-0 left-3">
                     <p className="flex items-center justify-center w-1 h-1 p-2 text-xs text-white bg-red-500 rounded-full">
